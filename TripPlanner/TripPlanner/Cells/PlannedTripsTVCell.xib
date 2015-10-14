@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="220" id="KGk-i7-Jjw" customClass="PlannedTripsTVCell" customModule="TripPlanner" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="426" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="426" height="199"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rcU-az-eEE" userLabel="Background" customClass="DesignableView" customModule="TripPlanner" customModuleProvider="target">
+                        <rect key="frame" x="15" y="16" width="396" height="176"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5qo-lc-afw">
+                                <rect key="frame" x="158" y="15" width="80" height="80"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="8Wh-fP-tWQ"/>
+                                    <constraint firstAttribute="width" secondItem="5qo-lc-afw" secondAttribute="height" multiplier="1:1" id="bgy-z7-yWN"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HPJ-sz-aRv">
+                                <rect key="frame" x="177" y="115" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5qo-lc-afw" firstAttribute="leading" secondItem="rcU-az-eEE" secondAttribute="leading" constant="15" id="Agx-ly-6jU"/>
+                            <constraint firstAttribute="bottom" secondItem="HPJ-sz-aRv" secondAttribute="bottom" constant="40" id="HYI-tF-6N6"/>
+                            <constraint firstItem="HPJ-sz-aRv" firstAttribute="centerX" secondItem="rcU-az-eEE" secondAttribute="centerX" id="LbK-nT-cyo"/>
+                            <constraint firstItem="5qo-lc-afw" firstAttribute="top" secondItem="rcU-az-eEE" secondAttribute="top" constant="15" id="PBC-LX-UdC"/>
+                            <constraint firstItem="HPJ-sz-aRv" firstAttribute="centerX" secondItem="5qo-lc-afw" secondAttribute="centerX" id="QI5-qh-a9f"/>
+                            <constraint firstItem="5qo-lc-afw" firstAttribute="centerX" secondItem="rcU-az-eEE" secondAttribute="centerX" id="SsS-Bd-QjT"/>
+                            <constraint firstItem="HPJ-sz-aRv" firstAttribute="top" secondItem="5qo-lc-afw" secondAttribute="bottom" constant="20" id="VXV-JK-jaI"/>
+                            <constraint firstAttribute="height" constant="201" id="ckR-fi-RWP"/>
+                            <constraint firstAttribute="height" constant="251" id="f6I-8S-fRP"/>
+                            <constraint firstAttribute="height" constant="250" id="fLA-dI-Ydg"/>
+                            <constraint firstItem="HPJ-sz-aRv" firstAttribute="centerY" secondItem="rcU-az-eEE" secondAttribute="centerY" id="rwv-VI-x2A"/>
+                            <constraint firstAttribute="bottom" secondItem="HPJ-sz-aRv" secondAttribute="bottom" constant="115" id="ymX-go-y5e"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                <real key="value" value="0.40000000000000002"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetY">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="f6I-8S-fRP"/>
+                                <exclude reference="fLA-dI-Ydg"/>
+                                <exclude reference="Agx-ly-6jU"/>
+                                <exclude reference="LbK-nT-cyo"/>
+                                <exclude reference="rwv-VI-x2A"/>
+                                <exclude reference="ymX-go-y5e"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+                <animations/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="rcU-az-eEE" secondAttribute="trailing" constant="15" id="17E-a7-3XJ"/>
+                    <constraint firstItem="rcU-az-eEE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Dkf-f6-Siu"/>
+                    <constraint firstItem="rcU-az-eEE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="VUG-mi-ghW"/>
+                    <constraint firstAttribute="bottom" secondItem="rcU-az-eEE" secondAttribute="bottom" constant="15" id="hZL-k3-FzY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="tripNameLabel" destination="HPJ-sz-aRv" id="Cvt-ZF-MDZ"/>
+            </connections>
+            <point key="canvasLocation" x="378" y="247"/>
+        </tableViewCell>
+    </objects>
+</document>
