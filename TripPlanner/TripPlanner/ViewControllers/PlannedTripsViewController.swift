@@ -16,11 +16,20 @@ class PlannedTripsViewController: UIViewController {
 
     var plannedTripsArrayDataSource: ArrayDataSource?
     
-    var items = ["Berlin", "San Francisco", "Paris", "Takoradi", "London"]
+    var items = ["Berlin", "San Francisco", "Paris", "Takoradi", "London", "Accra", "Lome", "Lagos", "Kumasi"]
     
     enum SegueDetail: String {
         case TripDetail = "TripDetail"
         case AddTrip = "AddTrip"
+        
+        var description: String {
+            switch(self) {
+            case .TripDetail:
+                return "TripDetail"
+            case .AddTrip:
+                return "AddTrip"
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -29,6 +38,7 @@ class PlannedTripsViewController: UIViewController {
         collectionView.delegate = self
 
         setupCollectionView()
+        layout()
     }
     
     
@@ -37,22 +47,16 @@ class PlannedTripsViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         
-        let direction = SegueDetail.TripDetail
-        
-        switch direction {
-            case .TripDetail: break
+        switch segue.identifier! {
+            case SegueDetail.AddTrip.description: return
+            case SegueDetail.TripDetail.description:
                 if let vc = segue.destinationViewController as? TripDetailViewController {
-//                    vc.trip = items[(tableView.indexPathForSelectedRow?.row)!]
-                }
-                break
-            case .AddTrip: break
+//                    vc.trip = items[(collectionView.indexPathsForSelectedItems()[0].row)]
+            }
+            
+            default: return
         }
-//        if segue.identifier == "TripDetail" {
-//            if let vc = sender?.destinationViewController as? UIViewController {
-//                
-//            }
-//        }
-//        if segu
+        
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -60,6 +64,8 @@ class PlannedTripsViewController: UIViewController {
     }
 
 }
+
+// MARK: - CollectionView DataSource
 
 extension PlannedTripsViewController {
     
@@ -80,10 +86,41 @@ extension PlannedTripsViewController {
     }
 }
 
+// MARK: - CollectionView Delegate
+
 extension PlannedTripsViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // Push to next view controller
         performSegueWithIdentifier(SegueDetail.TripDetail.rawValue, sender: self)
+    }
+}
+
+// MARK: - CollectionView Flow Layout
+
+extension PlannedTripsViewController: UICollectionViewDelegateFlowLayout {
+    
+    func layout() {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.scrollDirection = .Vertical
+        collectionView.collectionViewLayout = layout
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        let width = self.view.frame.size.width - 20
+        
+        let height:CGFloat = 200.0
+        
+        return CGSizeMake(width, height)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+        return sectionInsets
+//        let leftRightInset = self.view.frame.size.width / 26
+//       return UIEdgeInsetsMake(10, leftRightInset, 10, leftRightInset)
     }
 }

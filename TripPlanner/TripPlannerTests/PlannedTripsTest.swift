@@ -12,17 +12,15 @@ import XCTest
 @testable import TripPlanner
 
 class PlannedTripsTest: XCTestCase {
-    private var PlannedTripsCellIdentifier = "PlannedTripsCell"
-    var plannedTripsViewController: PlannedTripsViewController?
     var plannedTripsArrayDataSource: ArrayDataSource?
     let data = ["Berlin", "San Francisco", "Paris", "Takoradi", "London"]
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func setUp() {
         super.setUp()
-        
-        plannedTripsViewController = PlannedTripsViewController()
-        plannedTripsViewController?.items = data
+
+        setupTableView()
     }
     
     func setupTableView() {
@@ -34,13 +32,11 @@ class PlannedTripsTest: XCTestCase {
         })
     }
 
-    
+    /**
+    Tests the DataSource of the CollectionView / TableView
+    */
     func testPlannedTripsTableViewDataSource() {
-        
-        let data = ["Berlin", "San Francisco", "Paris", "Takoradi", "London"]
-        
-        
-        XCTAssertTrue(plannedTripsViewController?.plannedTripsArrayDataSource?.items == data, "Items in data source comparison")
+        XCTAssertTrue(plannedTripsArrayDataSource?.items == data, "Items in data source comparison")
         
     }
 }

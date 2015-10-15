@@ -19,6 +19,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2BQ-TC-Buy">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KSH-tO-dBg">
                                     <size key="itemSize" width="241" height="197"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -108,24 +109,31 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WSy-D4-zhE">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zlc-Dw-EPA">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Cx8-Ys-JJX">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="WSy-D4-zhE" secondAttribute="trailing" id="84X-5s-FA5"/>
-                            <constraint firstAttribute="bottom" secondItem="WSy-D4-zhE" secondAttribute="bottom" id="Yt1-QR-2QA"/>
-                            <constraint firstItem="WSy-D4-zhE" firstAttribute="leading" secondItem="8wk-kN-U7a" secondAttribute="leading" id="ezo-cx-BUN"/>
-                            <constraint firstItem="WSy-D4-zhE" firstAttribute="top" secondItem="8wk-kN-U7a" secondAttribute="top" id="rWI-Vh-FFO"/>
+                            <constraint firstItem="zlc-Dw-EPA" firstAttribute="top" secondItem="8wk-kN-U7a" secondAttribute="top" id="4QH-cw-BJq"/>
+                            <constraint firstAttribute="bottom" secondItem="zlc-Dw-EPA" secondAttribute="bottom" id="7qo-eO-upf"/>
+                            <constraint firstAttribute="trailing" secondItem="zlc-Dw-EPA" secondAttribute="trailing" id="Who-Zh-igj"/>
+                            <constraint firstItem="zlc-Dw-EPA" firstAttribute="leading" secondItem="8wk-kN-U7a" secondAttribute="leading" id="cw0-6k-iI2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Trip" id="FXj-cf-b09"/>
                     <connections>
-                        <outlet property="tableView" destination="WSy-D4-zhE" id="iOw-7C-p4N"/>
+                        <outlet property="collectionView" destination="zlc-Dw-EPA" id="jpV-xZ-jAf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5F4-ml-fJH" userLabel="First Responder" sceneMemberID="firstResponder"/>

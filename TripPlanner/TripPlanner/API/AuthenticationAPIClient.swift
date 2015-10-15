@@ -38,7 +38,9 @@ class AuthenticationAPIClient: NSObject {
     If login failed for either wrong password or wrong username, returns `Failure`.
     */
     func loginWithUsernameInBackground(username username: String, password: String, loginCallback: LoginCompletionHandler) {
-
+        
+        let params = [AuthenticationRouter.UsernameRESTKey:username, AuthenticationRouter.PasswordRESTKey: password]
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
             
             

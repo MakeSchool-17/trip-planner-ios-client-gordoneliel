@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0510FC941BD0362900999D04 /* AddTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0510FC931BD0362900999D04 /* AddTripViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		0531A70C1BCEE00B00965A0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531A70B1BCEE00B00965A0A /* AppDelegate.swift */; };
 		0531A7111BCEE00C00965A0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0531A70F1BCEE00C00965A0A /* Main.storyboard */; };
 		0531A7141BCEE00C00965A0A /* TripPlanner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0531A7121BCEE00C00965A0A /* TripPlanner.xcdatamodeld */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0510FC931BD0362900999D04 /* AddTripViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTripViewController.swift; sourceTree = "<group>"; };
 		0531A7081BCEE00B00965A0A /* TripPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0531A70B1BCEE00B00965A0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0531A7101BCEE00C00965A0A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			children = (
 				0531A7481BCEE0ED00965A0A /* PlannedTripsViewController.swift */,
 				0531A7531BCF2DE800965A0A /* TripDetailViewController.swift */,
+				0510FC931BD0362900999D04 /* AddTripViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				0531A7141BCEE00C00965A0A /* TripPlanner.xcdatamodeld in Sources */,
 				0531A7501BCEE8B200965A0A /* ArrayDataSource.swift in Sources */,
 				0531A70C1BCEE00B00965A0A /* AppDelegate.swift in Sources */,
+				0510FC941BD0362900999D04 /* AddTripViewController.swift in Sources */,
 				0531A7451BCEE0AA00965A0A /* DesignableButton.swift in Sources */,
 				0531A7471BCEE0AA00965A0A /* DesignableView.swift in Sources */,
 				0531A7541BCF2DE800965A0A /* TripDetailViewController.swift in Sources */,

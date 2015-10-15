@@ -12,22 +12,39 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="269" height="302"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPL-Ug-psq" userLabel="Background" customClass="DesignableView" customModule="TripPlanner">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPL-Ug-psq" userLabel="Background" customClass="DesignableView" customModule="TripPlanner">
                         <rect key="frame" x="0.0" y="0.0" width="269" height="302"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xyo-GR-Ty9">
-                                <rect key="frame" x="113" y="141" width="42" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="village_houses" translatesAutoresizingMaskIntoConstraints="NO" id="O3b-cC-DHN">
+                                <rect key="frame" x="0.0" y="0.0" width="269" height="302"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </imageView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DbF-zI-2Fg" userLabel="Mask">
+                                <rect key="frame" x="0.0" y="0.0" width="269" height="302"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.14999999999999999" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xyo-GR-Ty9">
+                                <rect key="frame" x="110" y="139" width="49" height="24"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="DbF-zI-2Fg" firstAttribute="top" secondItem="qPL-Ug-psq" secondAttribute="top" id="5l4-n1-qky"/>
+                            <constraint firstItem="O3b-cC-DHN" firstAttribute="top" secondItem="qPL-Ug-psq" secondAttribute="top" id="A4j-ug-pAm"/>
+                            <constraint firstItem="DbF-zI-2Fg" firstAttribute="leading" secondItem="qPL-Ug-psq" secondAttribute="leading" id="AmL-BY-zDR"/>
+                            <constraint firstAttribute="trailing" secondItem="DbF-zI-2Fg" secondAttribute="trailing" id="cXt-gQ-oWY"/>
+                            <constraint firstAttribute="trailing" secondItem="O3b-cC-DHN" secondAttribute="trailing" id="gV9-Sq-sqM"/>
                             <constraint firstItem="xyo-GR-Ty9" firstAttribute="centerY" secondItem="qPL-Ug-psq" secondAttribute="centerY" id="hjx-PU-JFn"/>
+                            <constraint firstAttribute="bottom" secondItem="O3b-cC-DHN" secondAttribute="bottom" id="iHd-7h-egA"/>
                             <constraint firstItem="xyo-GR-Ty9" firstAttribute="centerX" secondItem="qPL-Ug-psq" secondAttribute="centerX" id="id7-ta-DlA"/>
+                            <constraint firstItem="O3b-cC-DHN" firstAttribute="leading" secondItem="qPL-Ug-psq" secondAttribute="leading" id="oug-hJ-bo4"/>
+                            <constraint firstAttribute="bottom" secondItem="DbF-zI-2Fg" secondAttribute="bottom" id="vVP-Dt-izf"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -54,4 +71,7 @@
             <point key="canvasLocation" x="285.5" y="269"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="village_houses" width="1280" height="792"/>
+    </resources>
 </document>

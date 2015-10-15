@@ -10,7 +10,7 @@ import UIKit
 
 class TripDetailViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var trip: String?
     var tripDetailArrayDataSource: ArrayDataSource?
@@ -18,25 +18,12 @@ class TripDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
+        collectionView.delegate = self
         if trip == nil {
             trip = "Berlin"
         }
 //        setupTableView()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-
 }
 
 extension TripDetailViewController {
@@ -52,12 +39,12 @@ extension TripDetailViewController {
                     }
                 }
         })
-        tableView.dataSource = tripDetailArrayDataSource
-        tableView.registerNib(PlannedTripsTVCell.nib(), forCellReuseIdentifier: PlannedTripsCellIdentifier)
+        collectionView.dataSource = tripDetailArrayDataSource
+        collectionView.registerNib(PlannedTripsCVCell.nib(), forCellWithReuseIdentifier: PlannedTripsCellIdentifier)
     }
 }
 
-extension TripDetailViewController: UITableViewDelegate {
+extension TripDetailViewController: UICollectionViewDelegate {
     
 //    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //        let cell = PlannedTripsTVCell()
