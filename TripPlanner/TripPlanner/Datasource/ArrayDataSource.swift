@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-typealias TableViewCellConfigureCallback = (cell: UITableViewCell, item: AnyObject?) -> ()
+typealias TableViewCellConfigureCallback = (cell: AnyObject, item: AnyObject?) -> ()
 
 class ArrayDataSource: NSObject {
     var items = []
@@ -36,6 +36,24 @@ class ArrayDataSource: NSObject {
     }
 }
 
+// MARK : CollectionViewDataSource
+extension ArrayDataSource: UICollectionViewDataSource {
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier!, forIndexPath: indexPath)
+        
+        let item: AnyObject = itemAtIndex(indexPath)
+        
+        tableViewConfigureCallback?(cell: cell, item: item)
+        
+        return cell
+    }
+}
+
 // MARK : UITableViewDataSource
 extension ArrayDataSource: UITableViewDataSource {
     
@@ -48,9 +66,7 @@ extension ArrayDataSource: UITableViewDataSource {
         
         let item: AnyObject = itemAtIndex(indexPath)
         
-        if let callback = tableViewConfigureCallback {
-            callback(cell: cell, item: item)
-        }
+        tableViewConfigureCallback?(cell: cell, item: item)
         
         return cell
     }

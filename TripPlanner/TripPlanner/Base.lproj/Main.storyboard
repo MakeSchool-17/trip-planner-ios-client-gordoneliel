@@ -16,21 +16,33 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zI8-qs-qaX">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2BQ-TC-Buy">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <animations/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </tableView>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KSH-tO-dBg">
+                                    <size key="itemSize" width="241" height="197"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.95686274510000002" green="0.36470588240000001" blue="0.29803921570000003" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="zI8-qs-qaX" secondAttribute="trailing" id="UF9-fD-1Yx"/>
-                            <constraint firstItem="zI8-qs-qaX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="awq-Bp-PgA"/>
-                            <constraint firstAttribute="bottom" secondItem="zI8-qs-qaX" secondAttribute="bottom" id="oXf-wX-pQ2"/>
-                            <constraint firstItem="zI8-qs-qaX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="w74-al-9SA"/>
+                            <constraint firstAttribute="trailing" secondItem="2BQ-TC-Buy" secondAttribute="trailing" id="BId-d8-MRk"/>
+                            <constraint firstAttribute="bottom" secondItem="2BQ-TC-Buy" secondAttribute="bottom" id="IsR-Fq-arf"/>
+                            <constraint firstItem="2BQ-TC-Buy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Mve-2x-jMS"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2BQ-TC-Buy" secondAttribute="bottom" id="eQr-qW-Xg6"/>
+                            <constraint firstItem="2BQ-TC-Buy" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="npV-aw-LIO"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="eQr-qW-Xg6"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Planned Trips" id="DE6-Gq-kpE">
                         <barButtonItem key="rightBarButtonItem" image="Plus" id="8R8-73-PXb">
@@ -41,7 +53,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="zI8-qs-qaX" id="pSM-5H-eFc"/>
+                        <outlet property="collectionView" destination="2BQ-TC-Buy" id="xhD-Hy-eRp"/>
                         <segue destination="0zC-a4-fSg" kind="show" identifier="TripDetail" id="Inb-rF-xN7"/>
                     </connections>
                 </viewController>

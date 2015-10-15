@@ -12,7 +12,7 @@ var PlannedTripsCellIdentifier = "PlannedTripsCell"
 
 class PlannedTripsViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
 
     var plannedTripsArrayDataSource: ArrayDataSource?
     
@@ -26,9 +26,9 @@ class PlannedTripsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
+        collectionView.delegate = self
 
-        setupTableView()
+        setupCollectionView()
     }
     
     
@@ -42,7 +42,7 @@ class PlannedTripsViewController: UIViewController {
         switch direction {
             case .TripDetail: break
                 if let vc = segue.destinationViewController as? TripDetailViewController {
-                    vc.trip = items[(tableView.indexPathForSelectedRow?.row)!]
+//                    vc.trip = items[(tableView.indexPathForSelectedRow?.row)!]
                 }
                 break
             case .AddTrip: break
@@ -63,31 +63,27 @@ class PlannedTripsViewController: UIViewController {
 
 extension PlannedTripsViewController {
     
-    func setupTableView() {
+    func setupCollectionView() {
         
         plannedTripsArrayDataSource = ArrayDataSource(items: items, cellIdentifier: PlannedTripsCellIdentifier,
             tableViewConfigureCallback: {
                 (cell, item) -> () in
             
-            if let actualCell = cell as? PlannedTripsTVCell {
+            if let actualCell = cell as? PlannedTripsCVCell {
                 if let actualItem = item as? String {
                     actualCell.configureCell(actualItem)
                 }
             }
         })
-        tableView.dataSource = plannedTripsArrayDataSource
-        tableView.registerNib(PlannedTripsTVCell.nib(), forCellReuseIdentifier: PlannedTripsCellIdentifier)
+        collectionView.dataSource = plannedTripsArrayDataSource
+        collectionView.registerNib(PlannedTripsCVCell.nib(), forCellWithReuseIdentifier: PlannedTripsCellIdentifier)
     }
 }
 
-extension PlannedTripsViewController: UITableViewDelegate {
+extension PlannedTripsViewController: UICollectionViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // Push to next view controller
         performSegueWithIdentifier(SegueDetail.TripDetail.rawValue, sender: self)
-    }
-    
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 250
     }
 }
