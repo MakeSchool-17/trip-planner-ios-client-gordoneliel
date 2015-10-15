@@ -26,6 +26,7 @@
 		0531A7571BCF2ECC00965A0A /* TripDetailBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531A7551BCF2ECC00965A0A /* TripDetailBannerCell.swift */; settings = {ASSET_TAGS = (); }; };
 		0531A7581BCF2ECC00965A0A /* TripDetailBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0531A7561BCF2ECC00965A0A /* TripDetailBannerCell.xib */; settings = {ASSET_TAGS = (); }; };
 		05B653031BCF4C090054AF06 /* AuthenticationAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B653021BCF4C090054AF06 /* AuthenticationAPIClient.swift */; settings = {ASSET_TAGS = (); }; };
+		05B653061BCF502A0054AF06 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05B653051BCF502A0054AF06 /* Onboarding.storyboard */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		0531A7551BCF2ECC00965A0A /* TripDetailBannerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailBannerCell.swift; sourceTree = "<group>"; };
 		0531A7561BCF2ECC00965A0A /* TripDetailBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TripDetailBannerCell.xib; sourceTree = "<group>"; };
 		05B653021BCF4C090054AF06 /* AuthenticationAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationAPIClient.swift; sourceTree = "<group>"; };
+		05B653051BCF502A0054AF06 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 		0531A70A1BCEE00B00965A0A /* TripPlanner */ = {
 			isa = PBXGroup;
 			children = (
+				05B653041BCF4FCB0054AF06 /* Login */,
 				0531A7591BCF356F00965A0A /* API */,
 				0531A73D1BCEE0AA00965A0A /* Designables */,
 				0531A7411BCEE0AA00965A0A /* Helpers */,
@@ -223,6 +226,14 @@
 				05B653021BCF4C090054AF06 /* AuthenticationAPIClient.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		05B653041BCF4FCB0054AF06 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				05B653051BCF502A0054AF06 /* Onboarding.storyboard */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,6 +343,7 @@
 				0531A7581BCF2ECC00965A0A /* TripDetailBannerCell.xib in Resources */,
 				0531A7191BCEE00C00965A0A /* LaunchScreen.storyboard in Resources */,
 				0531A74D1BCEE5AB00965A0A /* PlannedTripsTVCell.xib in Resources */,
+				05B653061BCF502A0054AF06 /* Onboarding.storyboard in Resources */,
 				0531A7161BCEE00C00965A0A /* Assets.xcassets in Resources */,
 				0531A7111BCEE00C00965A0A /* Main.storyboard in Resources */,
 			);
