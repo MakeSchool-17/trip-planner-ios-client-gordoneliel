@@ -32,14 +32,93 @@
                             <constraint firstItem="zI8-qs-qaX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="w74-al-9SA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Planned Trips" id="DE6-Gq-kpE"/>
+                    <navigationItem key="navigationItem" title="Planned Trips" id="DE6-Gq-kpE">
+                        <barButtonItem key="rightBarButtonItem" image="Plus" id="8R8-73-PXb">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="cPM-dY-L4K" kind="presentation" identifier="AddTrip" id="YX0-P4-UX5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="zI8-qs-qaX" id="pSM-5H-eFc"/>
+                        <segue destination="0zC-a4-fSg" kind="show" identifier="TripDetail" id="Inb-rF-xN7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1270" y="454"/>
+            <point key="canvasLocation" x="688" y="386"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="wq2-dg-wl7">
+            <objects>
+                <viewController id="cPM-dY-L4K" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O3w-8c-CQ8"/>
+                        <viewControllerLayoutGuide type="bottom" id="1aN-PW-Ruh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Qs9-jQ-qiJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y1d-Dk-1yV">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <animations/>
+                                <items>
+                                    <barButtonItem title="Cancel" id="UBM-wO-JMF"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="qzC-Ln-AgX"/>
+                                    <barButtonItem title="Add" id="nXb-R4-O1j"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="y1d-Dk-1yV" firstAttribute="top" secondItem="Qs9-jQ-qiJ" secondAttribute="top" id="5AT-z2-Tji"/>
+                            <constraint firstItem="y1d-Dk-1yV" firstAttribute="leading" secondItem="Qs9-jQ-qiJ" secondAttribute="leading" id="ktj-vc-LO9"/>
+                            <constraint firstAttribute="trailing" secondItem="y1d-Dk-1yV" secondAttribute="trailing" id="oRH-wb-zfP"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jxV-zi-oDt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1413" y="82"/>
+        </scene>
+        <!--Trip-->
+        <scene sceneID="GZj-5V-POL">
+            <objects>
+                <viewController id="0zC-a4-fSg" customClass="TripDetailViewController" customModule="TripPlanner" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JNf-CK-lDb"/>
+                        <viewControllerLayoutGuide type="bottom" id="6uk-id-kaC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8wk-kN-U7a">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WSy-D4-zhE">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="WSy-D4-zhE" secondAttribute="trailing" id="84X-5s-FA5"/>
+                            <constraint firstAttribute="bottom" secondItem="WSy-D4-zhE" secondAttribute="bottom" id="Yt1-QR-2QA"/>
+                            <constraint firstItem="WSy-D4-zhE" firstAttribute="leading" secondItem="8wk-kN-U7a" secondAttribute="leading" id="ezo-cx-BUN"/>
+                            <constraint firstItem="WSy-D4-zhE" firstAttribute="top" secondItem="8wk-kN-U7a" secondAttribute="top" id="rWI-Vh-FFO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Trip" id="FXj-cf-b09"/>
+                    <connections>
+                        <outlet property="tableView" destination="WSy-D4-zhE" id="iOw-7C-p4N"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5F4-ml-fJH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1414" y="791"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rBW-gx-Zbt">
@@ -59,7 +138,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gbv-UD-USh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="544" y="454"/>
+            <point key="canvasLocation" x="-38" y="386"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Plus" width="19" height="19"/>
+    </resources>
 </document>

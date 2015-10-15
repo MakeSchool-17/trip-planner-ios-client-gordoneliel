@@ -8,7 +8,7 @@
 
 import UIKit
 
-private var PlannedTripsCellIdentifier = "PlannedTripsCell"
+var PlannedTripsCellIdentifier = "PlannedTripsCell"
 
 class PlannedTripsViewController: UIViewController {
 
@@ -18,6 +18,11 @@ class PlannedTripsViewController: UIViewController {
     
     var items = ["Berlin", "San Francisco", "Paris", "Takoradi", "London"]
     
+    enum SegueDetail: String {
+        case TripDetail = "TripDetail"
+        case AddTrip = "AddTrip"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,15 +31,30 @@ class PlannedTripsViewController: UIViewController {
         setupTableView()
     }
     
-    /*
-    // MARK: - Navigation
+    
+     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        
+        let direction = SegueDetail.TripDetail
+        
+        switch direction {
+            case .TripDetail: break
+                if let vc = segue.destinationViewController as? TripDetailViewController {
+                    vc.trip = items[(tableView.indexPathForSelectedRow?.row)!]
+                }
+                break
+            case .AddTrip: break
+        }
+//        if segue.identifier == "TripDetail" {
+//            if let vc = sender?.destinationViewController as? UIViewController {
+//                
+//            }
+//        }
+//        if segu
     }
-    */
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
@@ -64,6 +84,7 @@ extension PlannedTripsViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Push to next view controller
+        performSegueWithIdentifier(SegueDetail.TripDetail.rawValue, sender: self)
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

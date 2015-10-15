@@ -22,6 +22,9 @@
 		0531A74D1BCEE5AB00965A0A /* PlannedTripsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0531A74B1BCEE5AB00965A0A /* PlannedTripsTVCell.xib */; settings = {ASSET_TAGS = (); }; };
 		0531A7501BCEE8B200965A0A /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531A74F1BCEE8B200965A0A /* ArrayDataSource.swift */; settings = {ASSET_TAGS = (); }; };
 		0531A7521BCF05DB00965A0A /* PlannedTripsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531A7511BCF05DB00965A0A /* PlannedTripsTest.swift */; settings = {ASSET_TAGS = (); }; };
+		0531A7541BCF2DE800965A0A /* TripDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531A7531BCF2DE800965A0A /* TripDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		0531A7571BCF2ECC00965A0A /* TripDetailBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531A7551BCF2ECC00965A0A /* TripDetailBannerCell.swift */; settings = {ASSET_TAGS = (); }; };
+		0531A7581BCF2ECC00965A0A /* TripDetailBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0531A7561BCF2ECC00965A0A /* TripDetailBannerCell.xib */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,9 @@
 		0531A74B1BCEE5AB00965A0A /* PlannedTripsTVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlannedTripsTVCell.xib; sourceTree = "<group>"; };
 		0531A74F1BCEE8B200965A0A /* ArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDataSource.swift; sourceTree = "<group>"; };
 		0531A7511BCF05DB00965A0A /* PlannedTripsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlannedTripsTest.swift; sourceTree = "<group>"; };
+		0531A7531BCF2DE800965A0A /* TripDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailViewController.swift; sourceTree = "<group>"; };
+		0531A7551BCF2ECC00965A0A /* TripDetailBannerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailBannerCell.swift; sourceTree = "<group>"; };
+		0531A7561BCF2ECC00965A0A /* TripDetailBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TripDetailBannerCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,7 @@
 		0531A70A1BCEE00B00965A0A /* TripPlanner */ = {
 			isa = PBXGroup;
 			children = (
+				0531A7591BCF356F00965A0A /* API */,
 				0531A73D1BCEE0AA00965A0A /* Designables */,
 				0531A7411BCEE0AA00965A0A /* Helpers */,
 				0531A7421BCEE0AA00965A0A /* Models */,
@@ -154,6 +161,8 @@
 			children = (
 				0531A74A1BCEE5AB00965A0A /* PlannedTripsTVCell.swift */,
 				0531A74B1BCEE5AB00965A0A /* PlannedTripsTVCell.xib */,
+				0531A7551BCF2ECC00965A0A /* TripDetailBannerCell.swift */,
+				0531A7561BCF2ECC00965A0A /* TripDetailBannerCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -186,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				0531A7481BCEE0ED00965A0A /* PlannedTripsViewController.swift */,
+				0531A7531BCF2DE800965A0A /* TripDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -203,6 +213,13 @@
 				0531A74F1BCEE8B200965A0A /* ArrayDataSource.swift */,
 			);
 			path = Datasource;
+			sourceTree = "<group>";
+		};
+		0531A7591BCF356F00965A0A /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0531A7581BCF2ECC00965A0A /* TripDetailBannerCell.xib in Resources */,
 				0531A7191BCEE00C00965A0A /* LaunchScreen.storyboard in Resources */,
 				0531A74D1BCEE5AB00965A0A /* PlannedTripsTVCell.xib in Resources */,
 				0531A7161BCEE00C00965A0A /* Assets.xcassets in Resources */,
@@ -338,11 +356,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0531A74C1BCEE5AB00965A0A /* PlannedTripsTVCell.swift in Sources */,
+				0531A7571BCF2ECC00965A0A /* TripDetailBannerCell.swift in Sources */,
 				0531A7141BCEE00C00965A0A /* TripPlanner.xcdatamodeld in Sources */,
 				0531A7501BCEE8B200965A0A /* ArrayDataSource.swift in Sources */,
 				0531A70C1BCEE00B00965A0A /* AppDelegate.swift in Sources */,
 				0531A7451BCEE0AA00965A0A /* DesignableButton.swift in Sources */,
 				0531A7471BCEE0AA00965A0A /* DesignableView.swift in Sources */,
+				0531A7541BCF2DE800965A0A /* TripDetailViewController.swift in Sources */,
 				0531A7491BCEE0ED00965A0A /* PlannedTripsViewController.swift in Sources */,
 				0531A7461BCEE0AA00965A0A /* DesignableTextField.swift in Sources */,
 			);
