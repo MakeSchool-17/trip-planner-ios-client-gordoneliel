@@ -59,6 +59,10 @@ class PlannedTripsViewController: UIViewController {
         
     }
     
+    @IBAction func cancelToPlannedTrips(segue:UIStoryboardSegue) {
+        
+    }
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }

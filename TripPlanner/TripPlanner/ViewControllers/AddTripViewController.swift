@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 protocol AddTripDelegate: class {
     
@@ -15,9 +16,8 @@ protocol AddTripDelegate: class {
 }
 
 class AddTripViewController: UIViewController {
-
-    weak var tripAddDelegate: AddTripDelegate?
     
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tripNameField: UITextField!
     
     enum DataError : ErrorType {
@@ -25,20 +25,54 @@ class AddTripViewController: UIViewController {
         // add more later
     }
     
+    weak var tripAddDelegate: AddTripDelegate?
+    var plannedTripsArrayDataSource: ArrayDataSource?
+    var items = [AnyObject]()
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    @IBAction func addTripPressed(sender: UIBarButtonItem) {
+        do{
+            try addTrip()
+        }catch {
+            SVProgressHUD.showErrorWithStatus("Error")
+        }
+    }
+    /**
+    Adds a trip and sends to delegate
+    
+    - throws: A DataError if text is empty
+    */
     func addTrip() throws {
         
-        defer {tripAddDelegate?.tripAddFinished(self, trip: "")}
-        
-        guard let tripName = tripNameField.text else{
+        guard let tripName = tripNameField.text else {
             throw DataError.EmptyText
         }
         
         tripAddDelegate?.tripAddFinished(self, trip: tripName)
     }
+    
 }
 
+// MARK: - CollectionView DataSource
+
+extension AddTripViewController {
+    
+    func setupCollectionView() {
+        
+        plannedTripsArrayDataSource = ArrayDataSource(items: items, cellIdentifier: PlannedTripsCellIdentifier,
+            tableViewConfigureCallback: {
+                (cell, item) -> () in
+                
+                if let actualCell = cell as? PlannedTripsCVCell {
+                    if let actualItem = item as? String {
+                        actualCell.configureCell(actualItem)
+                    }
+                }
+        })
+        collectionView.dataSource = plannedTripsArrayDataSource
+        collectionView.registerNib(PlannedTripsCVCell.nib(), forCellWithReuseIdentifier: PlannedTripsCellIdentifier)
+    }
+}
 
