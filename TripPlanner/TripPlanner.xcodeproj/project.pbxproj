@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0510FC941BD0362900999D04 /* AddTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0510FC931BD0362900999D04 /* AddTripViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		05231E091BD1A09900D8A9FD /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05231E081BD1A09900D8A9FD /* AuthenticationTests.swift */; settings = {ASSET_TAGS = (); }; };
 		0531A70C1BCEE00B00965A0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531A70B1BCEE00B00965A0A /* AppDelegate.swift */; };
 		0531A7111BCEE00C00965A0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0531A70F1BCEE00C00965A0A /* Main.storyboard */; };
 		0531A7141BCEE00C00965A0A /* TripPlanner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0531A7121BCEE00C00965A0A /* TripPlanner.xcdatamodeld */; };
@@ -31,6 +32,7 @@
 		05B653031BCF4C090054AF06 /* AuthenticationAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B653021BCF4C090054AF06 /* AuthenticationAPIClient.swift */; settings = {ASSET_TAGS = (); }; };
 		05B653061BCF502A0054AF06 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05B653051BCF502A0054AF06 /* Onboarding.storyboard */; settings = {ASSET_TAGS = (); }; };
 		05B653091BCF55EE0054AF06 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B653081BCF55EE0054AF06 /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		05B8546E1BD17C4D003F24DD /* TinyNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B8546D1BD17C4D003F24DD /* TinyNetworking.swift */; settings = {ASSET_TAGS = (); }; };
 		BEBE74A3E77DB0A5D8EACF6F /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71F0E24B8087FCD1CBFAE230 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		0510FC931BD0362900999D04 /* AddTripViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTripViewController.swift; sourceTree = "<group>"; };
+		05231E081BD1A09900D8A9FD /* AuthenticationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
 		0531A7081BCEE00B00965A0A /* TripPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0531A70B1BCEE00B00965A0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0531A7101BCEE00C00965A0A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -82,6 +85,7 @@
 		05B653021BCF4C090054AF06 /* AuthenticationAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationAPIClient.swift; sourceTree = "<group>"; };
 		05B653051BCF502A0054AF06 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		05B653081BCF55EE0054AF06 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		05B8546D1BD17C4D003F24DD /* TinyNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinyNetworking.swift; sourceTree = "<group>"; };
 		0B9257356A89582A1F084E9A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		71F0E24B8087FCD1CBFAE230 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CC95DAA6177DFAFBEF1E87A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -113,6 +117,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05231E071BD1A07A00D8A9FD /* NetworkingTests */ = {
+			isa = PBXGroup;
+			children = (
+				05231E081BD1A09900D8A9FD /* AuthenticationTests.swift */,
+			);
+			path = NetworkingTests;
+			sourceTree = "<group>";
+		};
 		0531A6FF1BCEE00B00965A0A = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +150,7 @@
 		0531A70A1BCEE00B00965A0A /* TripPlanner */ = {
 			isa = PBXGroup;
 			children = (
+				05B8546C1BD17C40003F24DD /* Networking */,
 				05B653041BCF4FCB0054AF06 /* Login */,
 				0531A7591BCF356F00965A0A /* API */,
 				0531A73D1BCEE0AA00965A0A /* Designables */,
@@ -160,6 +173,7 @@
 		0531A7221BCEE00C00965A0A /* TripPlannerTests */ = {
 			isa = PBXGroup;
 			children = (
+				05231E071BD1A07A00D8A9FD /* NetworkingTests */,
 				0531A7511BCF05DB00965A0A /* PlannedTripsTest.swift */,
 				0531A7231BCEE00C00965A0A /* TripPlannerTests.swift */,
 				0531A7251BCEE00C00965A0A /* Info.plist */,
@@ -261,6 +275,14 @@
 				05B653081BCF55EE0054AF06 /* LoginViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		05B8546C1BD17C40003F24DD /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				05B8546D1BD17C4D003F24DD /* TinyNetworking.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		98248C598D0E99814E80BBDE /* Pods */ = {
@@ -475,6 +497,7 @@
 				0531A70C1BCEE00B00965A0A /* AppDelegate.swift in Sources */,
 				0510FC941BD0362900999D04 /* AddTripViewController.swift in Sources */,
 				0531A7451BCEE0AA00965A0A /* DesignableButton.swift in Sources */,
+				05B8546E1BD17C4D003F24DD /* TinyNetworking.swift in Sources */,
 				0531A7471BCEE0AA00965A0A /* DesignableView.swift in Sources */,
 				0531A7541BCF2DE800965A0A /* TripDetailViewController.swift in Sources */,
 				0531A7491BCEE0ED00965A0A /* PlannedTripsViewController.swift in Sources */,
@@ -488,6 +511,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0531A7241BCEE00C00965A0A /* TripPlannerTests.swift in Sources */,
+				05231E091BD1A09900D8A9FD /* AuthenticationTests.swift in Sources */,
 				0531A7521BCF05DB00965A0A /* PlannedTripsTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

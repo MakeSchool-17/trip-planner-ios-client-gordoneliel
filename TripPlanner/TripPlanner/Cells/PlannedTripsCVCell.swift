@@ -10,6 +10,7 @@ import UIKit
 
 class PlannedTripsCVCell: UICollectionViewCell {
 
+    @IBOutlet weak var tripCoverImage: UIImageView!
     @IBOutlet weak var tripNameLabel: UILabel!
     
     func configureCell(item: String) {
@@ -18,7 +19,11 @@ class PlannedTripsCVCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowOffset = CGSize(width: 0, height: 2)
+        layer.shadowRadius = 2
+        layer.shadowOpacity = 0.8
     }
     
     static func nib() -> UINib {
