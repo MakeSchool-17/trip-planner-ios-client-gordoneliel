@@ -17,17 +17,22 @@ protocol AddTripDelegate: class {
 
 class AddTripViewController: UIViewController {
     
-    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tripNameField: UITextField!
     
-    enum DataError : ErrorType {
+    enum DataError : String, ErrorType {
         case EmptyText
         // add more later
+        var description: String {
+            switch self{
+                case .EmptyText: return "Trip name cannot be empty"
+            }
+        }
     }
     
     weak var tripAddDelegate: AddTripDelegate?
     var plannedTripsArrayDataSource: ArrayDataSource?
-    var items = [AnyObject]()
+    var trip: Trip?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -35,8 +40,10 @@ class AddTripViewController: UIViewController {
     @IBAction func addTripPressed(sender: UIBarButtonItem) {
         do{
             try addTrip()
-        }catch {
-            SVProgressHUD.showErrorWithStatus("Error")
+        }catch let error as DataError {
+            SVProgressHUD.showErrorWithStatus(error.description, maskType: .Black)
+        }catch is ErrorType{
+            
         }
     }
     /**
@@ -46,33 +53,21 @@ class AddTripViewController: UIViewController {
     */
     func addTrip() throws {
         
-        guard let tripName = tripNameField.text else {
+        guard !tripNameField.text!.isEmpty, let tripName = tripNameField.text else {
             throw DataError.EmptyText
         }
+        saveTrip(tripName)
         
         tripAddDelegate?.tripAddFinished(self, trip: tripName)
     }
     
-}
-
-// MARK: - CollectionView DataSource
-
-extension AddTripViewController {
-    
-    func setupCollectionView() {
+    func saveTrip(tripName: String) {
         
-        plannedTripsArrayDataSource = ArrayDataSource(items: items, cellIdentifier: PlannedTripsCellIdentifier,
-            tableViewConfigureCallback: {
-                (cell, item) -> () in
-                
-                if let actualCell = cell as? PlannedTripsCVCell {
-                    if let actualItem = item as? String {
-                        actualCell.configureCell(actualItem)
-                    }
-                }
-        })
-        collectionView.dataSource = plannedTripsArrayDataSource
-        collectionView.registerNib(PlannedTripsCVCell.nib(), forCellWithReuseIdentifier: PlannedTripsCellIdentifier)
+//        let trip = Trip()
+//        trip.tripName = tripNameField.text
+        
     }
+    
 }
+
 

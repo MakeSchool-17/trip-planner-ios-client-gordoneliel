@@ -1,8 +1,9 @@
 //
-//  RELoginViewControllerSwift.swift
-//  ResQ
+//  SignUpViewController.swift
+//  TripPlanner
 //
-//  Created by Eliel Gordon on 8/31/15.
+//  Created by Eliel Gordon on 10/17/15.
+//  Copyright © 2015 Saltar Group. All rights reserved.
 //
 
 import UIKit
@@ -10,12 +11,12 @@ import QuartzCore
 import SVProgressHUD
 import SwiftyJSON
 
+class SignUpViewController: UIViewController {
 
-class LoginViewController: UIViewController {
-    
     // Outlets
     @IBOutlet weak var userNameTextField : UITextField!
     @IBOutlet weak var passwordTextField : UITextField!
+    @IBOutlet weak var verifyPasswordTextField: DesignableTextField!
     @IBOutlet weak var inputContainerCenterConstraint : NSLayoutConstraint!
     @IBOutlet weak var loginButton: DesignableButton!
     
@@ -23,11 +24,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         // Disable the login button till there is input for username and password
-//        loginButton(false)
+        //        loginButton(false)
         
         
-//        userNameTextField.addTarget(self, action: "textFieldDidChangeAnimation", forControlEvents: UIControlEvents.EditingChanged)
-//        passwordTextField.addTarget(self, action: "textFieldDidChangeAnimation", forControlEvents: UIControlEvents.EditingChanged)
+        //        userNameTextField.addTarget(self, action: "textFieldDidChangeAnimation", forControlEvents: UIControlEvents.EditingChanged)
+        //        passwordTextField.addTarget(self, action: "textFieldDidChangeAnimation", forControlEvents: UIControlEvents.EditingChanged)
     }
     
     /**
@@ -65,11 +66,11 @@ class LoginViewController: UIViewController {
     }
     
     /*
-     Logs in a user from the REST API
+    Logs in a user from the REST API
     */
-    func loginUser() {
-        SVProgressHUD.showWithStatus("Logging In", maskType: .Black)
-        AuthenticationAPIClient.sharedInstance.loginWithUsernameInBackground(username: userNameTextField.text!, password: passwordTextField.text!) {
+    func signUpUser() {
+        SVProgressHUD.showWithStatus("Signing you up", maskType: .Black)
+        AuthenticationAPIClient.sharedInstance.signUpInBackground(username: userNameTextField.text!, password: passwordTextField.text!) {
             (message: String) -> Void in
             
             SVProgressHUD.showSuccessWithStatus(message)
@@ -78,13 +79,9 @@ class LoginViewController: UIViewController {
         
     }
     // MARK: Login Action
-    @IBAction func loginPressed(sender: AnyObject) {
-
-        loginUser()
-    }
-    
-    @IBAction func unwindSignUp(segue: UIStoryboardSegue, sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func signUpPressed(sender: AnyObject) {
+        
+        signUpUser()
     }
     
     func moveToTabBarController() {
@@ -92,7 +89,7 @@ class LoginViewController: UIViewController {
         let viewController = storyboard.instantiateViewControllerWithIdentifier("") as! UITabBarController
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.window?.rootViewController = viewController
-
+        
     }
     
     /**
@@ -107,7 +104,7 @@ class LoginViewController: UIViewController {
 
 // MARK: - UITextField Delegate & Helpers
 
-extension LoginViewController: UITextFieldDelegate {
+extension SignUpViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         return true
     }
@@ -121,6 +118,10 @@ extension LoginViewController: UITextFieldDelegate {
         
         if textField == userNameTextField {
             passwordTextField.becomeFirstResponder()
+        }
+        
+        else if textField == passwordTextField {
+            verifyPasswordTextField.becomeFirstResponder()
         } else {
             
             moveInputContainer(false)
@@ -152,7 +153,7 @@ extension LoginViewController: UITextFieldDelegate {
             }
         }
     }
-
+    
     /**
     Enables or disables the login button, based on text entry
     */
@@ -167,4 +168,5 @@ extension LoginViewController: UITextFieldDelegate {
             self.loginButton(true)
         }
     }
+
 }

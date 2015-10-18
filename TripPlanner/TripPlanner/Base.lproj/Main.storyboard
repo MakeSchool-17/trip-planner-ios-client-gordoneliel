@@ -20,11 +20,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KSH-tO-dBg">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KSH-tO-dBg" customClass="PlannedTripViewLayout" customModule="TripPlanner" customModuleProvider="target">
                                     <size key="itemSize" width="241" height="197"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="numberOfItems">
+                                            <integer key="value" value="2"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
@@ -74,26 +79,24 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RJj-mE-js4">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="My Awesome Trip " textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zNo-wY-I3i">
+                                <rect key="frame" x="150" y="245" width="300" height="45"/>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="MEt-Wm-7lV">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                            </collectionView>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="N1q-wo-pzk"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="Pdf-En-09E"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95686274770000002" green="0.36470589040000001" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="RJj-mE-js4" firstAttribute="top" secondItem="Qs9-jQ-qiJ" secondAttribute="top" id="GFv-Fs-mpB"/>
-                            <constraint firstItem="RJj-mE-js4" firstAttribute="leading" secondItem="Qs9-jQ-qiJ" secondAttribute="leading" id="nOf-vC-joU"/>
-                            <constraint firstAttribute="trailing" secondItem="RJj-mE-js4" secondAttribute="trailing" id="wKY-4J-HR7"/>
-                            <constraint firstAttribute="bottom" secondItem="RJj-mE-js4" secondAttribute="bottom" id="xjc-Ol-Zel"/>
+                            <constraint firstItem="zNo-wY-I3i" firstAttribute="centerX" secondItem="Qs9-jQ-qiJ" secondAttribute="centerX" id="A8n-JC-9ig"/>
+                            <constraint firstItem="zNo-wY-I3i" firstAttribute="leading" secondItem="Qs9-jQ-qiJ" secondAttribute="leading" priority="999" constant="15" id="TeN-4r-KVF"/>
+                            <constraint firstItem="zNo-wY-I3i" firstAttribute="centerY" secondItem="Qs9-jQ-qiJ" secondAttribute="centerY" id="kpJ-qD-UcE"/>
+                            <constraint firstAttribute="trailing" secondItem="zNo-wY-I3i" secondAttribute="trailing" priority="999" constant="15" id="tXY-ZF-ZQD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Trip" id="HNT-fj-Ln3">
@@ -111,7 +114,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="collectionView" destination="RJj-mE-js4" id="7ea-lw-cqs"/>
+                        <outlet property="tripNameField" destination="zNo-wY-I3i" id="GEO-dy-GKw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jxV-zi-oDt" userLabel="First Responder" sceneMemberID="firstResponder"/>

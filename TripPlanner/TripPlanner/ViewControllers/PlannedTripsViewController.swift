@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 var PlannedTripsCellIdentifier = "PlannedTripsCell"
 
@@ -38,9 +39,11 @@ class PlannedTripsViewController: UIViewController {
         collectionView.delegate = self
 
         setupCollectionView()
-        layout()
+        
+        if let layout = collectionView?.collectionViewLayout as? PlannedTripViewLayout {
+            layout.delegate = self
+        }
     }
-    
     
      // MARK: - Navigation
 
@@ -48,15 +51,19 @@ class PlannedTripsViewController: UIViewController {
         
         
         switch segue.identifier! {
-            case SegueDetail.AddTrip.description: return
+            case SegueDetail.AddTrip.description:
+                if let addTripVC = segue.destinationViewController as? UINavigationController {
+                    let vc = addTripVC.topViewController as? AddTripViewController
+                    vc!.tripAddDelegate = self
+            }
+            
             case SegueDetail.TripDetail.description:
                 if let vc = segue.destinationViewController as? TripDetailViewController {
 //                    vc.trip = items[(collectionView.indexPathsForSelectedItems()[0].row)]
+                    
             }
-            
             default: return
         }
-        
     }
     
     @IBAction func cancelToPlannedTrips(segue:UIStoryboardSegue) {
@@ -90,6 +97,31 @@ extension PlannedTripsViewController {
     }
 }
 
+extension PlannedTripsViewController : PinterestLayoutDelegate {
+    // 1
+    func collectionView(collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:NSIndexPath,
+        withWidth width:CGFloat) -> CGFloat {
+            let photo = UIImage(named: "village_houses")
+            let boundingRect =  CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
+            let rect  = AVMakeRectWithAspectRatioInsideRect(photo!.size, boundingRect)
+            return rect.size.height
+//            return CGFloat(200)
+    }
+    
+    // 2
+    func collectionView(collectionView: UICollectionView,
+        heightForAnnotationAtIndexPath indexPath: NSIndexPath, withWidth width: CGFloat) -> CGFloat {
+//            let annotationPadding = CGFloat(4)
+//            let annotationHeaderHeight = CGFloat(17)
+//            let photo = photos[indexPath.item]
+//            let font = UIFont(name: "AvenirNext-Regular", size: 10)!
+//            let commentHeight = photo.heightForComment(font, width: width)
+//            let height = annotationPadding + annotationHeaderHeight + commentHeight + annotationPadding
+//            return height
+            return CGFloat(100)
+    }
+}
+
 // MARK: - CollectionView Delegate
 
 extension PlannedTripsViewController: UICollectionViewDelegate {
@@ -100,31 +132,11 @@ extension PlannedTripsViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: - CollectionView Flow Layout
+// MARK: AddTrip Delegate
 
-extension PlannedTripsViewController: UICollectionViewDelegateFlowLayout {
-    
-    func layout() {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
-        layout.scrollDirection = .Vertical
-        collectionView.collectionViewLayout = layout
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+extension PlannedTripsViewController: AddTripDelegate {
+    func tripAddFinished(controller: AddTripViewController, trip: AnyObject) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
         
-        let width = self.view.frame.size.width - 20
-        
-        let height:CGFloat = 200.0
-        
-        return CGSizeMake(width, height)
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
-        return sectionInsets
-//        let leftRightInset = self.view.frame.size.width / 26
-//       return UIEdgeInsetsMake(10, leftRightInset, 10, leftRightInset)
     }
 }

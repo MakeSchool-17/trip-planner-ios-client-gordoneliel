@@ -20,10 +20,10 @@ class PlannedTripsCVCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        layer.shadowColor = UIColor.blackColor().CGColor
-        layer.shadowOffset = CGSize(width: 0, height: 2)
-        layer.shadowRadius = 2
-        layer.shadowOpacity = 0.8
+//        layer.shadowColor = UIColor.blackColor().CGColor
+//        layer.shadowOffset = CGSize(width: 0, height: 2)
+//        layer.shadowRadius = 2
+//        layer.shadowOpacity = 0.8
     }
     
     static func nib() -> UINib {
