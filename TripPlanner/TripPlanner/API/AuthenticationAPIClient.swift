@@ -27,9 +27,10 @@ class AuthenticationAPIClient: NSObject {
     
     
     enum AuthenticationRouter {
-        static let loginUrlString = "http://localhost:5000/myusers/5622d69413ca32c753ddb72f"
+        static let loginUrlString = "http://172.30.2.150:5000/myusers/"
         static let logoutUrlString = "https://127.0.0.1/Logout"
         static let signUpUrlString = "http://127.0.0.1/myusers/"
+        static let testUrl = "http://requestb.in/vns4ahvn"
         static let UsernameRESTKey = "username"
         static let PasswordRESTKey = "password"
         
@@ -44,7 +45,7 @@ class AuthenticationAPIClient: NSObject {
     func authenticatedUser(username: String, password: String, method: HTTPMethod) -> Resource<String> {
         let basicAuth = BasicAuth.generateBasicAuthHeader(username, password: password)
         return Resource(path: "", method: method, requestBody: nil,
-            headers: ["Authentication": basicAuth], parse: parseString)
+            headers: ["Authorization": basicAuth], parse: parseString)
     }
     
     func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {

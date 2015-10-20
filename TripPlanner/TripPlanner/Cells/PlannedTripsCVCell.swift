@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class PlannedTripsCVCell: UICollectionViewCell {
 
@@ -19,11 +20,15 @@ class PlannedTripsCVCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
 //        layer.shadowColor = UIColor.blackColor().CGColor
-//        layer.shadowOffset = CGSize(width: 0, height: 2)
+//        layer.shadowOffset = CGSize(width: 0, height: 1.5)
 //        layer.shadowRadius = 2
-//        layer.shadowOpacity = 0.8
+//        layer.shadowOpacity = 0.4
+//        self.layer.masksToBounds = false
+//        self.layer.shouldRasterize = false
+//        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: UIRectCorner.AllCorners, cornerRadii: CGSize(width: 2, height: 2)).CGPath
+
     }
     
     static func nib() -> UINib {

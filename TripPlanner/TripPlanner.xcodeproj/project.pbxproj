@@ -31,6 +31,7 @@
 		054B15F21BD2DDCE00001BEE /* Trip+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B15EE1BD2DDCE00001BEE /* Trip+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
 		054B15F31BD2DDCE00001BEE /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B15EF1BD2DDCE00001BEE /* Trip.swift */; settings = {ASSET_TAGS = (); }; };
 		05751DB21BD1CE02002CACDA /* PlannedTripViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05751DB11BD1CE02002CACDA /* PlannedTripViewLayout.swift */; settings = {ASSET_TAGS = (); }; };
+		05795BF71BD5CDF800D640B1 /* UserCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05795BF61BD5CDF800D640B1 /* UserCache.swift */; settings = {ASSET_TAGS = (); }; };
 		057CDB611BCF630500078304 /* PlannedTripsCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057CDB5F1BCF630500078304 /* PlannedTripsCVCell.swift */; settings = {ASSET_TAGS = (); }; };
 		057CDB621BCF630500078304 /* PlannedTripsCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 057CDB601BCF630500078304 /* PlannedTripsCVCell.xib */; settings = {ASSET_TAGS = (); }; };
 		058337C21BD2CDCC00C25EDF /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058337C11BD2CDCC00C25EDF /* Resource.swift */; settings = {ASSET_TAGS = (); }; };
@@ -91,6 +92,7 @@
 		054B15EE1BD2DDCE00001BEE /* Trip+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Trip+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		054B15EF1BD2DDCE00001BEE /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		05751DB11BD1CE02002CACDA /* PlannedTripViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlannedTripViewLayout.swift; sourceTree = "<group>"; };
+		05795BF61BD5CDF800D640B1 /* UserCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCache.swift; sourceTree = "<group>"; };
 		057CDB5F1BCF630500078304 /* PlannedTripsCVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlannedTripsCVCell.swift; sourceTree = "<group>"; };
 		057CDB601BCF630500078304 /* PlannedTripsCVCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlannedTripsCVCell.xib; sourceTree = "<group>"; };
 		058337C11BD2CDCC00C25EDF /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
@@ -283,9 +285,18 @@
 			path = Layouts;
 			sourceTree = "<group>";
 		};
+		05795BF51BD5CD7E00D640B1 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				05795BF61BD5CDF800D640B1 /* UserCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 		05AA993C1BD2DB3E0088C697 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				05795BF51BD5CD7E00D640B1 /* Cache */,
 				05AA993F1BD2DBB80088C697 /* TripPlanner.xcdatamodeld */,
 				05AA994A1BD2DD150088C697 /* Entities */,
 			);
@@ -552,6 +563,7 @@
 				0531A7491BCEE0ED00965A0A /* PlannedTripsViewController.swift in Sources */,
 				0531A7461BCEE0AA00965A0A /* DesignableTextField.swift in Sources */,
 				05B653031BCF4C090054AF06 /* AuthenticationAPIClient.swift in Sources */,
+				05795BF71BD5CDF800D640B1 /* UserCache.swift in Sources */,
 				058337C21BD2CDCC00C25EDF /* Resource.swift in Sources */,
 				054B15F21BD2DDCE00001BEE /* Trip+CoreDataProperties.swift in Sources */,
 				054B15F11BD2DDCE00001BEE /* User.swift in Sources */,

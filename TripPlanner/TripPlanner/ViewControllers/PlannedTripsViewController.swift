@@ -37,12 +37,11 @@ class PlannedTripsViewController: UIViewController {
         super.viewDidLoad()
         
         collectionView.delegate = self
-
         setupCollectionView()
         
-        if let layout = collectionView?.collectionViewLayout as? PlannedTripViewLayout {
-            layout.delegate = self
-        }
+//        if let layout = collectionView?.collectionViewLayout as? PlannedTripViewLayout {
+//            layout.delegate = self
+//        }
     }
     
      // MARK: - Navigation
@@ -97,30 +96,46 @@ extension PlannedTripsViewController {
     }
 }
 
-extension PlannedTripsViewController : PinterestLayoutDelegate {
-    // 1
-    func collectionView(collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:NSIndexPath,
-        withWidth width:CGFloat) -> CGFloat {
-            let photo = UIImage(named: "village_houses")
-            let boundingRect =  CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
-            let rect  = AVMakeRectWithAspectRatioInsideRect(photo!.size, boundingRect)
-            return rect.size.height
-//            return CGFloat(200)
+extension PlannedTripsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let width = self.collectionView.frame.size.width - 40
+        
+        return CGSize(width: width, height: 200)
     }
     
-    // 2
-    func collectionView(collectionView: UICollectionView,
-        heightForAnnotationAtIndexPath indexPath: NSIndexPath, withWidth width: CGFloat) -> CGFloat {
-//            let annotationPadding = CGFloat(4)
-//            let annotationHeaderHeight = CGFloat(17)
-//            let photo = photos[indexPath.item]
-//            let font = UIFont(name: "AvenirNext-Regular", size: 10)!
-//            let commentHeight = photo.heightForComment(font, width: width)
-//            let height = annotationPadding + annotationHeaderHeight + commentHeight + annotationPadding
-//            return height
-            return CGFloat(100)
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return CGFloat(20)
     }
 }
+
+//extension PlannedTripsViewController : PinterestLayoutDelegate {
+//    // 1
+//    func collectionView(collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:NSIndexPath,
+//        withWidth width:CGFloat) -> CGFloat {
+//            let photo = UIImage(named: "village_houses")
+//            let boundingRect =  CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
+//            let rect  = AVMakeRectWithAspectRatioInsideRect(photo!.size, boundingRect)
+//            return rect.size.height
+////            return CGFloat(200)
+//    }
+//    
+//    // 2
+//    func collectionView(collectionView: UICollectionView,
+//        heightForAnnotationAtIndexPath indexPath: NSIndexPath, withWidth width: CGFloat) -> CGFloat {
+////            let annotationPadding = CGFloat(4)
+////            let annotationHeaderHeight = CGFloat(17)
+////            let photo = photos[indexPath.item]
+////            let font = UIFont(name: "AvenirNext-Regular", size: 10)!
+////            let commentHeight = photo.heightForComment(font, width: width)
+////            let height = annotationPadding + annotationHeaderHeight + commentHeight + annotationPadding
+////            return height
+//            return CGFloat(100)
+//    }
+//}
 
 // MARK: - CollectionView Delegate
 
