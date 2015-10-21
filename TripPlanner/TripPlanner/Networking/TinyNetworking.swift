@@ -30,27 +30,32 @@ public class TinyNetworking {
         
         let task = session.dataTaskWithRequest(request) {
             (data, response, error) -> Void in
-//            guard let httpResponse = response as? NSHTTPURLResponse where httpResponse.statusCode == 200 else{
-//                return 
-//            }
+            guard let httpResponse = response as? NSHTTPURLResponse, responseData = data, result = resource.parse(responseData) else{ return failure(Reason.NoData, data) }
             
-            if let httpResponse = response as? NSHTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    if let responseData = data {
-                        if let result = resource.parse(responseData) {
-                            completion(result)
-                        } else {
-                            failure(Reason.CouldNotParseJSON, data)
-                        }
-                    } else {
-                        failure(Reason.NoData, data)
-                    }
-                } else {
-                    failure(Reason.NoSuccessStatusCode(statusCode: httpResponse.statusCode), data)
-                }
-            } else {
-                failure(Reason.Other(error!), data)
+            if httpResponse.statusCode == 200{
+                completion(result)
+                
+            }else{
+                failure(Reason.NoSuccessStatusCode(statusCode: httpResponse.statusCode), data)
             }
+//            
+//            if let httpResponse = response as? NSHTTPURLResponse {
+//                if httpResponse.statusCode == 200 {
+//                    if let responseData = data {
+//                        if let result = resource.parse(responseData) {
+//                            completion(result)
+//                        } else {
+//                            failure(Reason.CouldNotParseJSON, data)
+//                        }
+//                    } else {
+//                        failure(Reason.NoData, data)
+//                    }
+//                } else {
+//                    failure(Reason.NoSuccessStatusCode(statusCode: httpResponse.statusCode), data)
+//                }
+//            } else {
+//                failure(Reason.Other(error!), data)
+//            }
         }
         task.resume()
     }

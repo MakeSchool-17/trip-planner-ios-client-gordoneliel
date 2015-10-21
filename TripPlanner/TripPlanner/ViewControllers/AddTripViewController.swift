@@ -42,7 +42,7 @@ class AddTripViewController: UIViewController {
             try addTrip()
         }catch let error as DataError {
             SVProgressHUD.showErrorWithStatus(error.description, maskType: .Black)
-        }catch is ErrorType{
+        }catch {
             
         }
     }
@@ -62,7 +62,10 @@ class AddTripViewController: UIViewController {
     }
     
     func saveTrip(tripName: String) {
-        
+        let user = User()
+        user.id = "23343"
+        user.username = "eliel"
+        APIClient.sharedInstance.postTrip(tripName, timeOfTrip: NSDate(), user: user.id!)
 //        let trip = Trip()
 //        trip.tripName = tripNameField.text
         

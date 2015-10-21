@@ -18,6 +18,7 @@ class PlannedTripsViewController: UIViewController {
     var plannedTripsArrayDataSource: ArrayDataSource?
     
     var items = ["Berlin", "San Francisco", "Paris", "Takoradi", "London", "Accra", "Lome", "Lagos", "Kumasi"]
+
     
     enum SegueDetail: String {
         case TripDetail = "TripDetail"

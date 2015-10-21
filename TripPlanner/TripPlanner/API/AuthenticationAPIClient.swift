@@ -12,11 +12,11 @@ typealias LoginCompletionHandler = String -> Void
 
 struct BasicAuth {
     static func generateBasicAuthHeader(username: String, password: String) -> String {
-    let loginString = NSString(format: "%@:%@", username, password)
-    let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
-    let base64LoginString = loginData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
-    let authHeaderString = "Basic \(base64LoginString)"
-    return authHeaderString
+        let loginString = NSString(format: "%@:%@", username, password)
+        let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
+        let base64LoginString = loginData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        let authHeaderString = "Basic \(base64LoginString)"
+        return authHeaderString
     }
 }
 
@@ -27,10 +27,9 @@ class AuthenticationAPIClient: NSObject {
     
     
     enum AuthenticationRouter {
-        static let loginUrlString = "http://172.30.2.150:5000/myusers/"
+        static let loginUrlString = "http://192.168.1.206:5000/myusers/"
         static let logoutUrlString = "https://127.0.0.1/Logout"
         static let signUpUrlString = "http://127.0.0.1/myusers/"
-        static let testUrl = "http://requestb.in/vns4ahvn"
         static let UsernameRESTKey = "username"
         static let PasswordRESTKey = "password"
         
@@ -41,16 +40,23 @@ class AuthenticationAPIClient: NSObject {
     func parseString(data: NSData) -> String? {
         return String(data: data, encoding: NSUTF8StringEncoding)
     }
-        
+    
     func authenticatedUser(username: String, password: String, method: HTTPMethod) -> Resource<String> {
         let basicAuth = BasicAuth.generateBasicAuthHeader(username, password: password)
         return Resource(path: "", method: method, requestBody: nil,
             headers: ["Authorization": basicAuth], parse: parseString)
     }
     
+    func signUpUser(username: String, password: String, method: HTTPMethod) -> Resource<String> {
+        
+        let jsonData = try! NSJSONSerialization.dataWithJSONObject(["username":username, "password": password], options: NSJSONWritingOptions.init(rawValue: 0))
+
+        return Resource(path: "", method: method, requestBody: jsonData, headers: [:], parse:parseString)
+    }
+    
     func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {
-//                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-        //        print("Failure: \(failureReason) \(string)")
+        //                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        //                print("Failure: \(failureReason) \(string)")
     }
     
     // MARK: - Authentication of User from Server
@@ -95,9 +101,17 @@ class AuthenticationAPIClient: NSObject {
     func signUpInBackground(username username: String, password: String, signUpCallback: LoginCompletionHandler) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
-            TinyNetworking.sharedInstance.apiRequest({_ in }, baseURL: NSURL(string: AuthenticationRouter.signUpUrlString)!, resource: self.authenticatedUser(username, password: password, method:.POST), failure: self.defaultFailureHandler) {
-                 message in
+            TinyNetworking.sharedInstance.apiRequest({_ in }, baseURL: NSURL(string: AuthenticationRouter.loginUrlString)!, resource: self.signUpUser(username, password: password, method: .POST), failure: self.defaultFailureHandler) {
+                
+                message in
+                print(message)
+                
             }
+            //            TinyNetworking.sharedInstance.apiRequest({_ in }, baseURL: NSURL(string: AuthenticationRouter.loginUrlString)!, resource: self.authenticatedUser(username, password: password, method:.POST), failure: self.defaultFailureHandler) {
+            //                 message in
+            //
+            //                print(message)
+            //            }
         }
     }
 }
