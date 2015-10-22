@@ -8,13 +8,15 @@
 
 import Foundation
 
+typealias CompletionCallback = AnyObject -> Void
+
 class APIClient: NSObject {
     // Singleton
     static let sharedInstance = APIClient()
     
     /// Path per resource
     enum Router {
-        static let tripEndpoint = "http://172.30.2.150:5000/mytrips/"
+        static let tripEndpoint = "http://192.168.1.206:5000/trips/"
         static let UsernameRESTKey = "username"
         static let PasswordRESTKey = "password"
     }
@@ -37,9 +39,9 @@ class APIClient: NSObject {
     
     func tripGet(username: String, password: String, method: HTTPMethod) -> Resource<String> {
         
-        let jsonData = try! NSJSONSerialization.dataWithJSONObject(["username":username, "password": password], options: NSJSONWritingOptions.init(rawValue: 0))
+        let auth = BasicAuth.generateBasicAuthHeader(username, password: password)
         
-        return Resource(path: "", method: method, requestBody: jsonData, headers: ["username": username, "password": password], parse:parseString)
+        return Resource(path: "", method: method, requestBody: nil, headers: ["Authorization": auth], parse:parseString)
     }
     
     /**
@@ -58,11 +60,12 @@ class APIClient: NSObject {
         }
     }
     
-    func getTrips(user: User) {
+    func getTrips(username: String, password: String, callback: CompletionCallback) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
-            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string: Router.tripEndpoint)!, resource: self.tripGet(user.username!, password: "", method: .GET), failure: self.defaultFailureHandler) {
+            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string: Router.tripEndpoint)!, resource: self.tripGet(username, password: password, method: .GET), failure: self.defaultFailureHandler) {
                 message in
                 
+                callback(message)
             }
         }
     }

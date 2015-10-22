@@ -39,12 +39,18 @@ class PlannedTripsViewController: UIViewController {
         
         collectionView.delegate = self
         setupCollectionView()
-        
-//        if let layout = collectionView?.collectionViewLayout as? PlannedTripViewLayout {
-//            layout.delegate = self
-//        }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        getTrips()
+    }
+    func getTrips() {
+        APIClient.sharedInstance.getTrips("eliel", password: "gordon") {
+            message in
+            print(message)
+        }
+    }
      // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -112,31 +118,6 @@ extension PlannedTripsViewController: UICollectionViewDelegateFlowLayout {
         return CGFloat(20)
     }
 }
-
-//extension PlannedTripsViewController : PinterestLayoutDelegate {
-//    // 1
-//    func collectionView(collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:NSIndexPath,
-//        withWidth width:CGFloat) -> CGFloat {
-//            let photo = UIImage(named: "village_houses")
-//            let boundingRect =  CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
-//            let rect  = AVMakeRectWithAspectRatioInsideRect(photo!.size, boundingRect)
-//            return rect.size.height
-////            return CGFloat(200)
-//    }
-//    
-//    // 2
-//    func collectionView(collectionView: UICollectionView,
-//        heightForAnnotationAtIndexPath indexPath: NSIndexPath, withWidth width: CGFloat) -> CGFloat {
-////            let annotationPadding = CGFloat(4)
-////            let annotationHeaderHeight = CGFloat(17)
-////            let photo = photos[indexPath.item]
-////            let font = UIFont(name: "AvenirNext-Regular", size: 10)!
-////            let commentHeight = photo.heightForComment(font, width: width)
-////            let height = annotationPadding + annotationHeaderHeight + commentHeight + annotationPadding
-////            return height
-//            return CGFloat(100)
-//    }
-//}
 
 // MARK: - CollectionView Delegate
 

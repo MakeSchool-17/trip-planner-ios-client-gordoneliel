@@ -27,9 +27,9 @@ class AuthenticationAPIClient: NSObject {
     
     
     enum AuthenticationRouter {
-        static let loginUrlString = "http://192.168.1.206:5000/myusers/"
+        static let loginUrlString = "http://192.168.1.206:5000/users/"
         static let logoutUrlString = "https://127.0.0.1/Logout"
-        static let signUpUrlString = "http://127.0.0.1/myusers/"
+        static let signUpUrlString = "http://127.0.0.1/users/"
         static let UsernameRESTKey = "username"
         static let PasswordRESTKey = "password"
         
