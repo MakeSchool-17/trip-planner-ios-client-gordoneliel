@@ -14,8 +14,8 @@ import CoreData
 
 extension Trip {
 
-    @NSManaged var tripImage: NSData?
     @NSManaged var tripName: String?
     @NSManaged var wayPoints: NSNumber?
+    @NSManaged var id: String?
 
 }

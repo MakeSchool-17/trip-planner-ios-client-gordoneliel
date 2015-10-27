@@ -30,7 +30,7 @@ extension TripDetailViewController {
     func setupTableView() {
         
         tripDetailArrayDataSource = ArrayDataSource(items: [trip!], cellIdentifier: PlannedTripsCellIdentifier,
-            tableViewConfigureCallback: {
+            cellConfigureCallback: {
                 (cell, item) -> () in
                 
                 if let actualCell = cell as? PlannedTripsTVCell {

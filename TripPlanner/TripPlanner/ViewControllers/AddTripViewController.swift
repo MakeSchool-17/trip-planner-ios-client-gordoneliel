@@ -12,7 +12,7 @@ import SVProgressHUD
 protocol AddTripDelegate: class {
     
     func tripAddFinished(controller: AddTripViewController, trip: AnyObject)
-
+    
 }
 
 class AddTripViewController: UIViewController {
@@ -24,7 +24,7 @@ class AddTripViewController: UIViewController {
         // add more later
         var description: String {
             switch self{
-                case .EmptyText: return "Trip name cannot be empty"
+            case .EmptyText: return "Trip name cannot be empty"
             }
         }
     }
@@ -43,14 +43,14 @@ class AddTripViewController: UIViewController {
         }catch let error as DataError {
             SVProgressHUD.showErrorWithStatus(error.description, maskType: .Black)
         }catch {
-            
+            SVProgressHUD.showErrorWithStatus("Eee", maskType: .Black)
         }
     }
     /**
-    Adds a trip and sends to delegate
-    
-    - throws: A DataError if text is empty
-    */
+     Adds a trip and sends to delegate
+     
+     - throws: A DataError if text is empty
+     */
     func addTrip() throws {
         
         guard !tripNameField.text!.isEmpty, let tripName = tripNameField.text else {
@@ -62,12 +62,12 @@ class AddTripViewController: UIViewController {
     }
     
     func saveTrip(tripName: String) {
-        let user = User()
-        user.id = "23343"
-        user.username = "eliel"
-        APIClient.sharedInstance.postTrip(tripName, timeOfTrip: NSDate(), user: user.id!)
-//        let trip = Trip()
-//        trip.tripName = tripNameField.text
+        let user = UserModel(username: "eliel", id: "5622d69413ca32c753ddb72f")
+        
+        APIClient.sharedInstance.postTrip(tripName, timeOfTrip: NSDate(), user: user) {
+            message in
+            print(message)
+        }
         
     }
     

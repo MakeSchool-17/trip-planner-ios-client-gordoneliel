@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Gloss
 
-typealias CompletionCallback = AnyObject -> Void
+typealias CompletionCallback = [Trip]? -> Void
 
 class APIClient: NSObject {
     // Singleton
@@ -20,49 +21,91 @@ class APIClient: NSObject {
         static let UsernameRESTKey = "username"
         static let PasswordRESTKey = "password"
     }
+    
+    /**
+     Parses an NSData from the network to a Trip entitiy
+     
+     - parameter data: The NSData from the server
+     
+     - returns: A Trip entity
+     */
+    func parseTrip(data: NSData) -> [Trip]? {
+        
+        let tripData = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.init(rawValue: 0)) as! [JSON]
+        
+        var tripModel = [TripModel]()
+        var tripEntities = [Trip]()
+        
 
-    func parseString(data: NSData) -> String? {
-        return String(data: data, encoding: NSUTF8StringEncoding)
+        for json in tripData {
+            tripModel.append(TripModel(json: json)!)
+        }
+        
+        for trip in tripModel {
+            tripEntities.append(CoreDataParser.parseTripToCoreData(trip))
+        }
+        
+        return tripEntities
     }
     
     func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {
-        //                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-        //                print("Failure: \(failureReason) \(string)")
+        let string = String(data: data!, encoding: NSUTF8StringEncoding)
+        print("Failure: \(failureReason) \(string)")
     }
     
-    func tripResource(tripName: String, timeOfTrip: NSDate, user: String, method: HTTPMethod) -> Resource<String> {
-        let json = ["tripName": tripName, "timeOfTrip": timeOfTrip, "user": user]
-        let jsonData = try! NSJSONSerialization.dataWithJSONObject(json, options: NSJSONWritingOptions.init(rawValue: 0))
-        return Resource(path: "", method: method, requestBody: jsonData, headers: [:], parse: parseString)
-
-    }
-    
-    func tripGet(username: String, password: String, method: HTTPMethod) -> Resource<String> {
+    func tripPost(tripName: String, timeOfTrip: NSDate, user: UserModel, method: HTTPMethod) -> Resource<[Trip]> {
+        let auth = BasicAuth.generateBasicAuthHeader(user.username, password: "gordon")
         
-        let auth = BasicAuth.generateBasicAuthHeader(username, password: password)
+        let tripPost = TripModel(tripName: tripName, tripUser: user.username).toJSON()!
+        let jsonData = try! NSJSONSerialization.dataWithJSONObject(tripPost, options: NSJSONWritingOptions.init(rawValue: 0))
         
-        return Resource(path: "", method: method, requestBody: nil, headers: ["Authorization": auth], parse:parseString)
+        return Resource(path: "", method: method, requestBody: jsonData, headers: ["Authorization": auth], parse: parseTrip)
     }
     
     /**
-    Posts a trip to the server
-    
-    - parameter tripName:   The name of the trip to be added
-    - parameter timeOfTrip: The time the trip will occcur
-    - parameter user:       The user the trip is associated with
-    */
-    func postTrip(tripName: String, timeOfTrip: NSDate, user: String) {
+     Fetches the trips from the backend server
+     
+     - parameter username: The user fetching the trips
+     - parameter password: The password of the user
+     - parameter method:   The type of HTTP Request
+     
+     - returns: A Trip
+     */
+    func tripGet(username: String, password: String, method: HTTPMethod) -> Resource<[Trip]> {
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
-            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string: Router.tripEndpoint)!, resource: self.tripResource(tripName, timeOfTrip: timeOfTrip, user: user, method: .POST), failure: self.defaultFailureHandler) {
+        let auth = BasicAuth.generateBasicAuthHeader(username, password: password)
+        
+        return Resource(path: "", method: method, requestBody: nil, headers: ["Authorization": auth], parse:parseTrip)
+    }
+    
+    /**
+     Posts a trip to the server
+     
+     - parameter tripName:   The name of the trip to be added
+     - parameter timeOfTrip: The time the trip will occcur
+     - parameter user:       The user the trip is associated with
+     */
+    func postTrip(tripName: String, timeOfTrip: NSDate, user: UserModel, callback: CompletionCallback) {
+        
+        let resource = tripPost(tripName, timeOfTrip: timeOfTrip, user: user, method: .POST)
+        let url = NSURL(string: Router.tripEndpoint)!
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
                 message in
+                
+                callback(message)
             }
         }
     }
     
     func getTrips(username: String, password: String, callback: CompletionCallback) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
-            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string: Router.tripEndpoint)!, resource: self.tripGet(username, password: password, method: .GET), failure: self.defaultFailureHandler) {
+        
+        let resource = tripGet(username, password: password, method: .GET)
+        let url = NSURL(string: Router.tripEndpoint)!
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
                 message in
                 
                 callback(message)

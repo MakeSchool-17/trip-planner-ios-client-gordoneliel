@@ -24,7 +24,8 @@ class LoginViewController: UIViewController {
         
         // Disable the login button till there is input for username and password
 //        loginButton(false)
-        
+        userNameTextField.text = "eliel"
+        passwordTextField.text = "gordon"
         
 //        userNameTextField.addTarget(self, action: "textFieldDidChangeAnimation", forControlEvents: UIControlEvents.EditingChanged)
 //        passwordTextField.addTarget(self, action: "textFieldDidChangeAnimation", forControlEvents: UIControlEvents.EditingChanged)
@@ -70,7 +71,8 @@ class LoginViewController: UIViewController {
     func loginUser() {
         SVProgressHUD.showWithStatus("Logging In", maskType: .Black)
         AuthenticationAPIClient.sharedInstance.loginWithUsernameInBackground(username: userNameTextField.text!, password: passwordTextField.text!) {
-            (message: String) -> Void in
+            (message: User?) -> Void in
+            
             print(message)
             self.moveToTabBarController()
         }

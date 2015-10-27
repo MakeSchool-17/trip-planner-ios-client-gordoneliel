@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Gloss
 
-typealias LoginCompletionHandler = String -> Void
+typealias LoginCompletionHandler = User? -> Void
 
 struct BasicAuth {
     static func generateBasicAuthHeader(username: String, password: String) -> String {
@@ -37,26 +38,32 @@ class AuthenticationAPIClient: NSObject {
         case Login, Signup, Signout
     }
     
-    func parseString(data: NSData) -> String? {
-        return String(data: data, encoding: NSUTF8StringEncoding)
+    func parseUser(data: NSData) -> User? {
+        let jsonData = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.init(rawValue: 0)) as! JSON
+        
+        let user = UserModel(json: jsonData)
+        
+        let coreDataUser = CoreDataParser.parseUserToCoreData(user!)
+        
+        return coreDataUser
     }
     
-    func authenticatedUser(username: String, password: String, method: HTTPMethod) -> Resource<String> {
+    func authenticatedUser(username: String, password: String, method: HTTPMethod) -> Resource<User> {
         let basicAuth = BasicAuth.generateBasicAuthHeader(username, password: password)
         return Resource(path: "", method: method, requestBody: nil,
-            headers: ["Authorization": basicAuth], parse: parseString)
+            headers: ["Authorization": basicAuth], parse: parseUser)
     }
     
-    func signUpUser(username: String, password: String, method: HTTPMethod) -> Resource<String> {
+    func signUpUser(username: String, password: String, method: HTTPMethod) -> Resource<User> {
         
         let jsonData = try! NSJSONSerialization.dataWithJSONObject(["username":username, "password": password], options: NSJSONWritingOptions.init(rawValue: 0))
-
-        return Resource(path: "", method: method, requestBody: jsonData, headers: [:], parse:parseString)
+        
+        return Resource(path: "", method: method, requestBody: jsonData, headers: [:], parse:parseUser)
     }
     
     func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {
-        //                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-        //                print("Failure: \(failureReason) \(string)")
+        let string = String(data: data!, encoding: NSUTF8StringEncoding)
+        print("Failure: \(failureReason) \(string)")
     }
     
     // MARK: - Authentication of User from Server
@@ -73,23 +80,24 @@ class AuthenticationAPIClient: NSObject {
     */
     func loginWithUsernameInBackground(username username: String, password: String, loginCallback: LoginCompletionHandler) {
         
-        let params = [AuthenticationRouter.UsernameRESTKey:username, AuthenticationRouter.PasswordRESTKey: password]
+        let resource = authenticatedUser(username, password: password, method: .GET)
+        let failure = defaultFailureHandler
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             
-            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string:AuthenticationRouter.loginUrlString)!, resource: self.authenticatedUser(username, password: password, method: .GET), failure: self.defaultFailureHandler)
-                { message in
-                    
-                    loginCallback(message)
+            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string:AuthenticationRouter.loginUrlString)!, resource: resource, failure: failure) {
+                message in
+                
+                loginCallback(message)
             }
         }
     }
     
     /**
-    :abstract: Makes an *asynchronous* request to logout a user with specified credentials.
-    
-    :discussion: This will also trigger a remove from the Realm database
-    */
+     :abstract: Makes an *asynchronous* request to logout a user with specified credentials.
+     
+     :discussion: This will also trigger a remove from the Realm database
+     */
     func logoutInBackground() {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
@@ -98,6 +106,13 @@ class AuthenticationAPIClient: NSObject {
         }
     }
     
+    /**
+     Signs a *User* into our service
+     
+     - parameter username:       The username
+     - parameter password:       The password
+     - parameter signUpCallback: Completion handler for signing up. Propagates response of a sign up
+     */
     func signUpInBackground(username username: String, password: String, signUpCallback: LoginCompletionHandler) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
@@ -107,11 +122,6 @@ class AuthenticationAPIClient: NSObject {
                 print(message)
                 
             }
-            //            TinyNetworking.sharedInstance.apiRequest({_ in }, baseURL: NSURL(string: AuthenticationRouter.loginUrlString)!, resource: self.authenticatedUser(username, password: password, method:.POST), failure: self.defaultFailureHandler) {
-            //                 message in
-            //
-            //                print(message)
-            //            }
         }
     }
 }

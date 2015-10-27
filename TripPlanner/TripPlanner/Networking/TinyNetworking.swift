@@ -30,9 +30,10 @@ public class TinyNetworking {
         
         let task = session.dataTaskWithRequest(request) {
             (data, response, error) -> Void in
-            guard let httpResponse = response as? NSHTTPURLResponse, responseData = data, result = resource.parse(responseData) else{ return failure(Reason.NoData, data) }
+            guard let httpResponse = response as? NSHTTPURLResponse, responseData = data else { return failure(Reason.NoData, data) }
             
-            if httpResponse.statusCode == 200{
+            if httpResponse.statusCode == 200 {
+                guard let result = resource.parse(responseData) else {return}
                 completion(result)
                 
             }else{
@@ -71,13 +72,13 @@ public class TinyNetworking {
         
     }
     
-//    func encodeJSON(dict: JSONDictionary) -> NSData? {
-//        do {
-//            return try dict.count > 0 ? NSJSONSerialization.dataWithJSONObject(dict, options: NSJSONWritingOptions()) : nil
-//        } catch let error{
-//            print(error)
-//        }
-//    }
+    func encodeJSON(dict: JSONDictionary) -> NSData? {
+        do {
+            return try dict.count > 0 ? NSJSONSerialization.dataWithJSONObject(dict, options: NSJSONWritingOptions()) : NSData()
+        } catch _{
+           assert(false)
+        }
+    }
     
 //    func jsonResource<A>(path: String, method: Method, requestParameters: JSONDictionary, parse: JSONDictionary -> A?) -> Resource<A> {
 //        let f = { decodeJSON($0) >>= parse }

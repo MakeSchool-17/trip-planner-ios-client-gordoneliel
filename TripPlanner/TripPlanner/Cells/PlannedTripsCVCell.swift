@@ -14,8 +14,8 @@ class PlannedTripsCVCell: UICollectionViewCell {
     @IBOutlet weak var tripCoverImage: UIImageView!
     @IBOutlet weak var tripNameLabel: UILabel!
     
-    func configureCell(item: String) {
-        tripNameLabel.text = item
+    func configureCell(item: Trip) {
+        tripNameLabel.text = item.tripName
     }
     
     override func awakeFromNib() {

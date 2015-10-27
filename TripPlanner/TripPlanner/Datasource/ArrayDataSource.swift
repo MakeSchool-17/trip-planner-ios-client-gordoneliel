@@ -9,18 +9,18 @@
 import Foundation
 import UIKit
 
-typealias TableViewCellConfigureCallback = (cell: AnyObject, item: AnyObject?) -> ()
+typealias CellConfigureCallback = (cell: Any, item: Any?) -> ()
 
 class ArrayDataSource: NSObject {
-    var items = []
+    var items = [AnyObject]()
     var cellIdentifier: String?
-    var tableViewConfigureCallback: TableViewCellConfigureCallback?
+    var cellConfigureCallback: CellConfigureCallback?
 
-    init(items: [AnyObject], cellIdentifier: String, tableViewConfigureCallback: TableViewCellConfigureCallback){
+    init(items: [AnyObject], cellIdentifier: String, cellConfigureCallback: CellConfigureCallback){
         
         self.items = items
         self.cellIdentifier = cellIdentifier
-        self.tableViewConfigureCallback = tableViewConfigureCallback
+        self.cellConfigureCallback = cellConfigureCallback
         super.init()
     }
 
@@ -48,7 +48,7 @@ extension ArrayDataSource: UICollectionViewDataSource {
         
         let item: AnyObject = itemAtIndex(indexPath)
         
-        tableViewConfigureCallback?(cell: cell, item: item)
+        cellConfigureCallback?(cell: cell, item: item)
         
         return cell
     }
@@ -66,7 +66,7 @@ extension ArrayDataSource: UITableViewDataSource {
         
         let item: AnyObject = itemAtIndex(indexPath)
         
-        tableViewConfigureCallback?(cell: cell, item: item)
+        cellConfigureCallback?(cell: cell, item: item)
         
         return cell
     }

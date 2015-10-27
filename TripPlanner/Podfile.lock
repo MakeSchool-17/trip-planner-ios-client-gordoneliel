@@ -1,12 +1,15 @@
 PODS:
+  - Gloss (0.5.3)
   - SVProgressHUD (1.1.3)
   - SwiftyJSON (2.3.0)
 
 DEPENDENCIES:
+  - Gloss
   - SVProgressHUD
   - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Gloss: a6c096af543554313e98fd113108b768ade78159
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
 

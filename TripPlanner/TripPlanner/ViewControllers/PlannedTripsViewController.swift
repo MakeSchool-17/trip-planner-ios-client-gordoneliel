@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 var PlannedTripsCellIdentifier = "PlannedTripsCell"
 
@@ -18,7 +17,7 @@ class PlannedTripsViewController: UIViewController {
     var plannedTripsArrayDataSource: ArrayDataSource?
     
     var items = ["Berlin", "San Francisco", "Paris", "Takoradi", "London", "Accra", "Lome", "Lagos", "Kumasi"]
-
+    var tripModels = [Trip]()
     
     enum SegueDetail: String {
         case TripDetail = "TripDetail"
@@ -43,14 +42,26 @@ class PlannedTripsViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        getTrips()
+//        getTrips()
     }
+    
+    /**
+     Fetch Trips from API
+     */
     func getTrips() {
-        APIClient.sharedInstance.getTrips("eliel", password: "gordon") {
-            message in
-            print(message)
-        }
+        APIClient.sharedInstance.getTrips("eliel", password: "gordon", callback: processTrips)
     }
+    
+    /**
+     Process Trip Data
+     
+     - parameter trips: The trips from the server
+     */
+    func processTrips(trips: [Trip]?) {
+        guard let models = trips  else { return }
+        tripModels = models
+    }
+    
      // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -88,12 +99,12 @@ extension PlannedTripsViewController {
     
     func setupCollectionView() {
         
-        plannedTripsArrayDataSource = ArrayDataSource(items: items, cellIdentifier: PlannedTripsCellIdentifier,
-            tableViewConfigureCallback: {
+        plannedTripsArrayDataSource = ArrayDataSource(items: tripModels, cellIdentifier: PlannedTripsCellIdentifier,
+            cellConfigureCallback: {
                 (cell, item) -> () in
             
             if let actualCell = cell as? PlannedTripsCVCell {
-                if let actualItem = item as? String {
+                if let actualItem = item as? Trip {
                     actualCell.configureCell(actualItem)
                 }
             }

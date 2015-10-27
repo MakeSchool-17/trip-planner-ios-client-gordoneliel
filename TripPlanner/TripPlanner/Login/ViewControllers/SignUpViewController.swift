@@ -71,9 +71,9 @@ class SignUpViewController: UIViewController {
     func signUpUser() {
         SVProgressHUD.showWithStatus("Signing you up", maskType: .Black)
         AuthenticationAPIClient.sharedInstance.signUpInBackground(username: userNameTextField.text!, password: passwordTextField.text!) {
-            (message: String) -> Void in
+            (message: User?) -> Void in
             
-            SVProgressHUD.showSuccessWithStatus(message)
+            SVProgressHUD.showSuccessWithStatus(message?.username)
         }
         SVProgressHUD.dismiss()
         
