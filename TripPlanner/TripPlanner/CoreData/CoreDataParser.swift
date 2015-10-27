@@ -25,7 +25,7 @@ final class CoreDataParser {
         
         let coreDataTripEntity = Trip(context: context)
         coreDataTripEntity.tripName = jsonModel.tripName
-        coreDataTripEntity.id = jsonModel.id
+        coreDataTripEntity.tripName = jsonModel.id
         
         return coreDataTripEntity
     }
@@ -36,7 +36,9 @@ final class CoreDataParser {
         let coreDataUserEntity = User(context: context)
         
         coreDataUserEntity.username = jsonModel.username
-        coreDataUserEntity.id = jsonModel.id
+        coreDataUserEntity.userId = jsonModel.userId
+        
+//        CoreDataStack().saveContext()
         
         return coreDataUserEntity
     }

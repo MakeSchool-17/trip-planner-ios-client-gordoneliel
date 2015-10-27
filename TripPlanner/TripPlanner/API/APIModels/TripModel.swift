@@ -12,11 +12,12 @@ import Gloss
 struct TripModel: Glossy {
     var tripName: String
     var tripUser: String
-    var id: String?
+    var id: String
     
     init(tripName: String, tripUser: String) {
         self.tripName = tripName
         self.tripUser = tripUser
+        self.id = ""
     }
     
     init?(json: JSON) {

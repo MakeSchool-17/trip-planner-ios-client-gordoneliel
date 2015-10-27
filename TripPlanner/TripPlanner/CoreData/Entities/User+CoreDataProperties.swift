@@ -16,6 +16,6 @@ extension User {
 
     @NSManaged var email: String?
     @NSManaged var username: String?
-    @NSManaged var id: String?
+    @NSManaged var userId: String?
 
 }

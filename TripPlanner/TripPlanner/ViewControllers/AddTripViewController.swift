@@ -62,7 +62,7 @@ class AddTripViewController: UIViewController {
     }
     
     func saveTrip(tripName: String) {
-        let user = UserModel(username: "eliel", id: "5622d69413ca32c753ddb72f")
+        let user = UserModel(username: "eliel", password: "gordon")
         
         APIClient.sharedInstance.postTrip(tripName, timeOfTrip: NSDate(), user: user) {
             message in

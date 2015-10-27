@@ -16,6 +16,6 @@ extension Trip {
 
     @NSManaged var tripName: String?
     @NSManaged var wayPoints: NSNumber?
-    @NSManaged var id: String?
+    @NSManaged var tripId: String?
 
 }

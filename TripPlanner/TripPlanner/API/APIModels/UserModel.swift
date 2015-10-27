@@ -11,23 +11,27 @@ import Gloss
 
 struct UserModel: Glossy {
     var username: String
-    var id: String
+    var password: String
+    var userId: String
     
     
-    init(username: String, id: String) {
+    init(username: String, password: String) {
         self.username = username
-        self.id = id
+        self.password = password
+        self.userId = ""
     }
     
     init?(json: JSON) {
         self.username = ("username" <~~ json)!
-        self.id = ("_id" <~~ json)!
+        self.userId = ("_id" <~~ json)!
+        self.password = ("password" <~~ json)!
     }
     
     func toJSON() -> JSON? {
         return jsonify([
             "username" ~~> username,
-            "_id" ~~> id
+            "_id" ~~> userId,
+            "password" ~~> password
         ])
     }
 }

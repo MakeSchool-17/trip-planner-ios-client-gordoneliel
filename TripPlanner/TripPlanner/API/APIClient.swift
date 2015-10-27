@@ -9,7 +9,7 @@
 import Foundation
 import Gloss
 
-typealias CompletionCallback = [Trip]? -> Void
+typealias TripCallback = [Trip]? -> Void
 
 class APIClient: NSObject {
     // Singleton
@@ -17,7 +17,7 @@ class APIClient: NSObject {
     
     /// Path per resource
     enum Router {
-        static let tripEndpoint = "http://192.168.1.206:5000/trips/"
+        static let tripEndpoint = "http://172.30.2.150:5000/trips/"
         static let UsernameRESTKey = "username"
         static let PasswordRESTKey = "password"
     }
@@ -85,30 +85,30 @@ class APIClient: NSObject {
      - parameter timeOfTrip: The time the trip will occcur
      - parameter user:       The user the trip is associated with
      */
-    func postTrip(tripName: String, timeOfTrip: NSDate, user: UserModel, callback: CompletionCallback) {
+    func postTrip(tripName: String, timeOfTrip: NSDate, user: UserModel, callback: TripCallback) {
         
         let resource = tripPost(tripName, timeOfTrip: timeOfTrip, user: user, method: .POST)
         let url = NSURL(string: Router.tripEndpoint)!
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
-                message in
+                trip in
                 
-                callback(message)
+                callback(trip)
             }
         }
     }
     
-    func getTrips(username: String, password: String, callback: CompletionCallback) {
+    func getTrips(username: String, password: String, callback: TripCallback) {
         
         let resource = tripGet(username, password: password, method: .GET)
         let url = NSURL(string: Router.tripEndpoint)!
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
-                message in
+                trips in
                 
-                callback(message)
+                callback(trips)
             }
         }
     }
