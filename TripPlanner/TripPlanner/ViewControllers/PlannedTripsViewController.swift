@@ -16,7 +16,7 @@ class PlannedTripsViewController: UIViewController {
 
     var plannedTripsArrayDataSource: ArrayDataSource?
     
-    var items = ["Berlin", "San Francisco", "Paris", "Takoradi", "London", "Accra", "Lome", "Lagos", "Kumasi"]
+//    var items = ["Berlin", "San Francisco", "Paris", "Takoradi", "London", "Accra", "Lome", "Lagos", "Kumasi"]
     var tripModels = [Trip]()
     
     enum SegueDetail: String {
@@ -37,12 +37,13 @@ class PlannedTripsViewController: UIViewController {
         super.viewDidLoad()
         
         collectionView.delegate = self
+        getTrips()
         setupCollectionView()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        getTrips()
+        
     }
     
     /**
@@ -60,6 +61,8 @@ class PlannedTripsViewController: UIViewController {
     func processTrips(trips: [Trip]?) {
         guard let models = trips  else { return }
         tripModels = models
+        setupCollectionView()
+        collectionView.reloadData()
     }
     
      // MARK: - Navigation

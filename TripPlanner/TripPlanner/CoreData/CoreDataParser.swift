@@ -26,6 +26,7 @@ final class CoreDataParser {
         let coreDataTripEntity = Trip(context: context)
         coreDataTripEntity.tripName = jsonModel.tripName
         coreDataTripEntity.tripName = jsonModel.id
+        coreDataTripEntity.user = jsonModel.tripUser
         
         return coreDataTripEntity
     }

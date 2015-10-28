@@ -3,7 +3,9 @@
     <entity name="Trip" representedClassName=".Trip" syncable="YES">
         <attribute name="tripId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tripName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="wayPoints" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="tripUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -11,7 +13,7 @@
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Trip" positionX="0" positionY="63" width="128" height="90"/>
+        <element name="Trip" positionX="0" positionY="63" width="128" height="120"/>
         <element name="User" positionX="-36" positionY="9" width="128" height="90"/>
     </elements>
 </model>

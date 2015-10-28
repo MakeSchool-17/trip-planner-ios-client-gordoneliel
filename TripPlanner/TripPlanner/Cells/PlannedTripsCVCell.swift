@@ -16,6 +16,7 @@ class PlannedTripsCVCell: UICollectionViewCell {
     
     func configureCell(item: Trip) {
         tripNameLabel.text = item.tripName
+
     }
     
     override func awakeFromNib() {

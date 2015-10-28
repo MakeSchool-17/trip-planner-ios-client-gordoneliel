@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-typealias CellConfigureCallback = (cell: Any, item: Any?) -> ()
+typealias CellConfigureCallback = (cell: AnyObject, item: AnyObject?) -> ()
 
 class ArrayDataSource: NSObject {
     var items = [AnyObject]()
