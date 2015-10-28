@@ -8,6 +8,7 @@
 
 import Foundation
 import Gloss
+import KeychainAccess
 
 typealias TripCallback = [Trip]? -> Void
 
@@ -67,7 +68,11 @@ class APIClient: NSObject {
      - returns: Sucess or Error
      */
     func tripPost(trip: TripModel, user: UserModel, method: HTTPMethod) -> Resource<String> {
-        let auth = BasicAuth.generateBasicAuthHeader(user.username, password: "gordon")
+        
+        let keychain = Keychain(service: "com.saltar.TripPlanner")
+        let password = try! keychain.getString("password")
+        
+        let auth = BasicAuth.generateBasicAuthHeader(user.username, password: password!)
         
         let jsonData = try! NSJSONSerialization.dataWithJSONObject(trip.toJSON()!, options: NSJSONWritingOptions.init(rawValue: 0))
         
@@ -85,7 +90,10 @@ class APIClient: NSObject {
      */
     func tripGet(username: String, password: String, method: HTTPMethod) -> Resource<[Trip]> {
         
-        let auth = BasicAuth.generateBasicAuthHeader(username, password: password)
+        let keychain = Keychain(service: "com.saltar.TripPlanner")
+        let password = try! keychain.getString("password")
+        
+        let auth = BasicAuth.generateBasicAuthHeader(username, password: password!)
         
         return Resource(path: "", method: method, requestBody: nil, headers: ["Authorization": auth], parse:parseTrip)
     }

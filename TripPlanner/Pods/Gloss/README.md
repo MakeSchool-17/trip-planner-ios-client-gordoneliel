@@ -1,6 +1,12 @@
 ![Gloss](http://hkellaway.github.io/Gloss/images/gloss_logo_tagline.png)
 
-## Features :sparkles: ![Swift](https://img.shields.io/badge/language-Swift-orange.svg) [![CocoaPods](https://img.shields.io/cocoapods/v/Gloss.svg)](http://cocoapods.org/pods/Gloss) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![License](https://img.shields.io/cocoapods/l/Gloss.svg)](https://raw.githubusercontent.com/hkellaway/Gloss/master/LICENSE) [![CocoaPods](https://img.shields.io/cocoapods/p/Gloss.svg)](http://cocoapods.org/pods/Gloss)
+## Features :sparkles: 
+![Swift](https://img.shields.io/badge/language-Swift-orange.svg) 
+[![CocoaPods](https://img.shields.io/cocoapods/v/Gloss.svg)](http://cocoapods.org/pods/Gloss) 
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) 
+[![License](https://img.shields.io/cocoapods/l/Gloss.svg)](https://raw.githubusercontent.com/hkellaway/Gloss/master/LICENSE) 
+[![CocoaPods](https://img.shields.io/cocoapods/p/Gloss.svg)](http://cocoapods.org/pods/Gloss) 
+[![Build Status](https://travis-ci.org/hkellaway/Gloss.svg)](https://travis-ci.org/hkellaway/Gloss)
 
 * Mapping JSON to objects
 * Mapping objects to JSON
@@ -15,7 +21,7 @@
 ### Installation with Cocoapods
 
 ```ruby
-pod 'Gloss', '~> 0.5'
+pod 'Gloss', '~> 0.6'
 ```
 
 ### Installation with Carthage
@@ -32,9 +38,7 @@ carthage update --platform iOS
 
 ### Swift 2 and Swift 1.2
 
-Gloss was written for use with Swift 2. If you are a Swift 1.2 user, you can install the version found on the `swift_1.2` branch.
-
-Note: The `swift_1.2` branch will not include improvements made using features specific to Swift 2.
+Gloss was written for use with Swift 2. Support for Swift 1.2 via the `swift_1.2` branch was dropped as of version 0.6.0.
 
 ## Usage
 
@@ -171,6 +175,9 @@ struct Repo: Decodable {
 
 Despite being more complex, this model is just as simple to compose - common types such as an `NSURL`, an `enum` value, and another Gloss model, `RepoOwner`, are handled without extra overhead! :tada:
 
+#### Model Arrays
+
+See [Model Objects from JSON Arrays](#model-objects-from-json-arrays) for how to create arrays of models from JSON arrays.
 
 ### Serialization
 
@@ -209,32 +216,73 @@ See [On Not Using Gloss Operators](#on-not-using-gloss-operators) for how to exp
 
 ### Initializing Model Objects
 
-Instances of Gloss models are made by calling `init(json:)`.
+Instances of `Decodable` Gloss models are made by calling `init(json:)`.
 
 For example, we can create a `RepoOwner` as follows:
 
 ``` swift
 let repoOwnerJSON = [
-	"id" : 5456481,
-	"name": "hkellaway"
+        "id" : 5456481,
+        "name": "hkellaway"
 ]
 
+guard let repoOwner = RepoOwner(json: repoJSON)
+    else { /* handle nil object here */ }
+
+print(repoOwner.repoId)
+print(repoOwner.name)
+```
+
+Or, using `if let` syntax: 
+
+``` swift
 if let repoOwner = RepoOwner(json: repoOwnerJSON) {
-    // use repoOwner here
+    print(repoOwner.repoId)
+    print(repoOwner.name)
 }
 
 ```
 
+#### Model Objects from JSON Arrays
+
+Gloss also supports creating models from JSON arrays. The `modelsFromJSONArray(_:)` function can be called on any Gloss model class to produce an array of objects from a JSON array passed in.
+
+For example, let's consider the following array of JSON representing repo owners:
+
+``` swift
+let repoOwnersJSON = [
+    [
+        "id" : 5456481,
+        "name": "hkellaway"
+    ],
+    [
+        "id" : 1234567,
+        "name": "user2"
+    ]
+]
+```
+An array of `RepoOwner` objects could be obtained via the following:
+
+```
+guard let repoOwners = RepoOwner.modelsFromJSONArray(repoOwnersJSON)
+    else { /* handle nil array here */ }
+
+print(repoOwners)
+```
+
 ### Translating Model Objects to JSON
 
-The JSON representation of an object is retrieved as such:
+The JSON representation of an `Encodable` Gloss model is retrieved via `toJSON()`:
 
-```swift
+``` swift
 repoOwner.toJSON()
 
 ```
-Note: This requires implementing the `toJSON()` function (See: [Serialization](#serialization)).
+An array of JSON from an array of models is retrieved via `toJSONArray(_:)`:
 
+``` swift
+Repo.toJSONArray(repoOwners)
+```
 
 ## Additional Topics
 
@@ -261,11 +309,11 @@ and
 The `<~~` operator is simply syntactic sugar for a set of `Decoder.decode` functions:
 
 * Simple types (`Decoder.decode`)
-* `Decodable` models (`Decoder.decode`)
+* `Decodable` models (`Decoder.decodeDecodable`)
 * Simple arrays (`Decoder.decode`)
-* Arrays of `Decodable` models (`Decoder.decodeArray`)
+* Arrays of `Decodable` models (`Decoder.decodeDecodableArray`)
 * Enum types (`Decoder.decodeEnum`)
-* Enum arrays (`Decoder.decodeArray`)
+* Enum arrays (`Decoder.decodeEnumArray`)
 * `NSURL` types (`Decoder.decodeURL`)
 
 ##### The Encode Operator: `~~>`
@@ -273,11 +321,11 @@ The `<~~` operator is simply syntactic sugar for a set of `Decoder.decode` funct
 The `~~>` operator is simply syntactic sugar for a set of `Encoder.encode` functions:
 
 * Simple types (`Encoder.encode`)
-* `Encodable` models (`Encoder.encode`)
-* Simple arrays (`Encoder.encode`)
-* Arrays of `Encodable` models (`Encoder.encodeArray`)
+* `Encodable` models (`Encoder.encodeEncodable`)
+* Simple arrays (`Encoder.encodeArray`)
+* Arrays of `Encodable` models (`Encoder.encodeEncodableArray`)
 * Enum types (`Encoder.encodeEnum`)
-* Enum arrays (`Encoder.encodeArray`)
+* Enum arrays (`Encoder.encodeEnumArray`)
 * `NSURL` types (`Encoder.encodeURL`)
 
 ### Gloss Transformations
@@ -340,7 +388,7 @@ We've created an extension on `Decoder` and written our own decode function, `de
 
 What's important to note is that the return type for `decodeStringUppercase` is a function that translates from `JSON` to the desired type -- in this case, `JSON -> String?`. The value you're working with will be accessible via `json[key]` and will need to be cast to the desired type using `as?`. Then, manipulation can be done - for example, uppercasing. The transformed value should be returned; in the case that the cast failed, `nil` should be returned.
 
-Though depicted here as being in the same file, good practice would have the `Decoder` extension in a separate `Decoder.swift` file for organizational purposes.
+Though depicted here as being in the same file, good practice would have the `Decoder` extension in a separate file for organizational purposes.
 
 
 #### To JSON
@@ -393,7 +441,7 @@ We've created an extension on `Encoder` and written our own encode function, `en
 
 What's important to note is that the return type for `encodeStringLowercase` is a function that translates from the property's type to `JSON?` -- in this case, `String? -> JSON?`. The value you're working with will be accessible via the `if let` statement. Then, manipulation can be done - for example, lowercasing. What should be returned is a dictionary with `key` as the key and the manipulated value as its value. In the case that the `if let` failed, `nil` should be returned.
 
-Though depicted here as being in the same file, good practice would have the `Encoder` extension in a separate `Encoder.swift` file for organizational purposes.
+Though depicted here as being in the same file, good practice would have the `Encoder` extension in a separate file for organizational purposes.
 
 ### Gloss Protocols
 

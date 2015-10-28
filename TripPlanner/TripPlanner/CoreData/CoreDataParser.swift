@@ -20,26 +20,31 @@ final class CoreDataParser {
      - returns: A Core Data trip entity
      */
     class func parseTripToCoreData(jsonModel: TripModel) -> Trip {
+        let stack = CoreDataStack()
         
-        let context = CoreDataStack().managedObjectContext
+        let context = stack.managedObjectContext
         
         let coreDataTripEntity = Trip(context: context)
         coreDataTripEntity.tripName = jsonModel.tripName
-        coreDataTripEntity.tripName = jsonModel.id
+        coreDataTripEntity.tripId = jsonModel.id
         coreDataTripEntity.user = jsonModel.tripUser
+        
+        stack.saveContext()
         
         return coreDataTripEntity
     }
     
     class func parseUserToCoreData(jsonModel: UserModel) -> User {
-        let context = CoreDataStack().managedObjectContext
+        let stack = CoreDataStack()
+        
+        let context = stack.managedObjectContext
         
         let coreDataUserEntity = User(context: context)
         
         coreDataUserEntity.username = jsonModel.username
         coreDataUserEntity.userId = jsonModel.userId
         
-//        CoreDataStack().saveContext()
+        stack.saveContext()
         
         return coreDataUserEntity
     }

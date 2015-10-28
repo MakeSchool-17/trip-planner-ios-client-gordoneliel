@@ -8,6 +8,7 @@
 
 import Foundation
 import Gloss
+import KeychainAccess
 
 typealias LoginCallback = User? -> Void
 
@@ -42,6 +43,11 @@ class AuthenticationAPIClient: NSObject {
         let jsonData = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.init(rawValue: 0)) as! JSON
         
         let user = UserModel(json: jsonData)!
+        
+        // Store password in keychain before saving model to core  data
+        // TODO: Not sure if this is the right place to do this
+        let keychain = Keychain(service: "com.saltar.TripPlanner")
+        try! keychain.set(user.password, key: "password")
         
         let coreDataUser = CoreDataParser.parseUserToCoreData(user)
         

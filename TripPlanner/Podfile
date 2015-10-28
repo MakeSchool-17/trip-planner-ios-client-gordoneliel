@@ -5,4 +5,5 @@ use_frameworks!
 pod 'SVProgressHUD'
 pod ‘SwiftyJSON'
 pod 'Gloss'
-
+pod 'GoogleMaps'
+pod 'KeychainAccess'

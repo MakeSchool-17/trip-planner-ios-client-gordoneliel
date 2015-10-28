@@ -61,7 +61,7 @@ class PlannedTripsViewController: UIViewController {
     func processTrips(trips: [Trip]?) {
         guard let models = trips  else { return }
         tripModels = models
-        setupCollectionView()
+//        setupCollectionView()
         collectionView.reloadData()
     }
     
@@ -119,7 +119,7 @@ extension PlannedTripsViewController {
 
 extension PlannedTripsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = self.collectionView.frame.size.width - 40
+        let width = self.collectionView.frame.size.width - 20
         
         return CGSize(width: width, height: 200)
     }
