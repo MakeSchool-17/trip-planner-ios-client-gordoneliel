@@ -71,7 +71,7 @@ class LoginViewController: UIViewController {
     func loginUser() {
         SVProgressHUD.showWithStatus("Logging In", maskType: .Black)
         AuthenticationAPIClient.sharedInstance.loginWithUsernameInBackground(username: userNameTextField.text!, password: passwordTextField.text!) {
-            (message: User?) -> Void in
+            (message: UserModel?) -> Void in
             
             print(message)
             self.moveToTabBarController()
@@ -97,7 +97,6 @@ class LoginViewController: UIViewController {
             appDelegate.window?.rootViewController = viewController
 
         }
-        
     }
     
     /**

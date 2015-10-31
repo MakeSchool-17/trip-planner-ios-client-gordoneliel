@@ -1,13 +1,14 @@
 //
 //  User.swift
-//  TripPlanner
 //
-//  Created by Eliel Gordon on 10/17/15.
-//  Copyright © 2015 Saltar Group. All rights reserved.
+//
+//  Created by Eliel Gordon on 10/28/15.
+//
 //
 
 import Foundation
 import CoreData
+
 
 class User: NSManagedObject {
     

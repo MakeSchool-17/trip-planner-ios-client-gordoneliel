@@ -7,17 +7,19 @@
 //
 
 import UIKit
+import CoreData
+import SVProgressHUD
 
 var PlannedTripsCellIdentifier = "PlannedTripsCell"
 
 class PlannedTripsViewController: UIViewController {
-
-    @IBOutlet weak var collectionView: UICollectionView!
-
-    var plannedTripsArrayDataSource: ArrayDataSource?
     
-//    var items = ["Berlin", "San Francisco", "Paris", "Takoradi", "London", "Accra", "Lome", "Lagos", "Kumasi"]
-    var tripModels = [Trip]()
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var plannedTripsArrayDataSource: ArrayDataSource?
+    var trips :[Trip] = []
+    
+    var managedObjectContext = CoreDataStack().managedObjectContext
     
     enum SegueDetail: String {
         case TripDetail = "TripDetail"
@@ -35,54 +37,47 @@ class PlannedTripsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         collectionView.delegate = self
-        getTrips()
-        setupCollectionView()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        getTrips()
     }
     
     /**
      Fetch Trips from API
      */
     func getTrips() {
-        APIClient.sharedInstance.getTrips("eliel", password: "gordon", callback: processTrips)
-    }
-    
-    /**
-     Process Trip Data
-     
-     - parameter trips: The trips from the server
-     */
-    func processTrips(trips: [Trip]?) {
-        guard let models = trips  else { return }
-        tripModels = models
-//        setupCollectionView()
+        SVProgressHUD.show()
+        trips = CoreDataClient(managedObjectContext: managedObjectContext).allTrips()
         collectionView.reloadData()
+        SVProgressHUD.dismiss()
     }
     
-     // MARK: - Navigation
-
+    @IBAction func refreshTrips(sender: AnyObject) {
+        CoreDataSync(managedObjectContext: managedObjectContext).sync { result in
+            self.trips = result
+            self.collectionView.reloadData()
+        }
+    }
+    // MARK: - Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        
         switch segue.identifier! {
-            case SegueDetail.AddTrip.description:
-                if let addTripVC = segue.destinationViewController as? UINavigationController {
-                    let vc = addTripVC.topViewController as? AddTripViewController
-                    vc!.tripAddDelegate = self
+        case SegueDetail.AddTrip.description:
+            if let addTripVC = segue.destinationViewController as? UINavigationController {
+                let vc = addTripVC.topViewController as? AddTripViewController
+                vc!.tripAddDelegate = self
             }
             
-            case SegueDetail.TripDetail.description:
-                if let vc = segue.destinationViewController as? TripDetailViewController {
-//                    vc.trip = items[(collectionView.indexPathsForSelectedItems()[0].row)]
-                    
+        case SegueDetail.TripDetail.description:
+            if let vc = segue.destinationViewController as? TripDetailViewController {
+                vc.trip = trips[(collectionView.indexPathsForSelectedItems()![0].row)]
+                
             }
-            default: return
+        default: return
         }
     }
     
@@ -93,7 +88,7 @@ class PlannedTripsViewController: UIViewController {
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
-
+    
 }
 
 // MARK: - CollectionView DataSource
@@ -101,16 +96,15 @@ class PlannedTripsViewController: UIViewController {
 extension PlannedTripsViewController {
     
     func setupCollectionView() {
-        
-        plannedTripsArrayDataSource = ArrayDataSource(items: tripModels, cellIdentifier: PlannedTripsCellIdentifier,
+        plannedTripsArrayDataSource = ArrayDataSource(items: trips, cellIdentifier: PlannedTripsCellIdentifier,
             cellConfigureCallback: {
                 (cell, item) -> () in
-            
-            if let actualCell = cell as? PlannedTripsCVCell {
-                if let actualItem = item as? Trip {
-                    actualCell.configureCell(actualItem)
+                
+                if let actualCell = cell as? PlannedTripsCVCell {
+                    if let actualItem = item as? Trip {
+                        actualCell.configureCell(actualItem)
+                    }
                 }
-            }
         })
         collectionView.dataSource = plannedTripsArrayDataSource
         collectionView.registerNib(PlannedTripsCVCell.nib(), forCellWithReuseIdentifier: PlannedTripsCellIdentifier)

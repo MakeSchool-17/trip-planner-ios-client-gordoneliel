@@ -71,11 +71,13 @@ class SignUpViewController: UIViewController {
     func signUpUser() {
         SVProgressHUD.showWithStatus("Signing you up", maskType: .Black)
         AuthenticationAPIClient.sharedInstance.signUpInBackground(username: userNameTextField.text!, password: passwordTextField.text!) {
-            (message: User?) -> Void in
+            (message: UserModel?) -> Void in
             
             SVProgressHUD.showSuccessWithStatus(message?.username)
+            self.moveToTabBarController()
         }
         SVProgressHUD.dismiss()
+        
         
     }
     // MARK: Login Action
@@ -85,11 +87,13 @@ class SignUpViewController: UIViewController {
     }
     
     func moveToTabBarController() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewControllerWithIdentifier("") as! UITabBarController
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.window?.rootViewController = viewController
-        
+        dispatch_async(dispatch_get_main_queue())  {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewControllerWithIdentifier("PlannedTripsNav") as! UINavigationController
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.window?.rootViewController = viewController
+            
+        }
     }
     
     /**

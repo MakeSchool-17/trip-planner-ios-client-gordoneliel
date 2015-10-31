@@ -10,9 +10,9 @@ import Foundation
 import Gloss
 
 struct UserModel: Glossy {
-    var username: String
-    var password: String
-    var userId: String
+    var username: String?
+    var password: String?
+    var userId: String?
     
     
     init(username: String, password: String) {
@@ -22,15 +22,14 @@ struct UserModel: Glossy {
     }
     
     init?(json: JSON) {
-        self.username = ("username" <~~ json)!
-        self.userId = ("_id" <~~ json)!
-        self.password = ("password" <~~ json)!
+        self.username = "username" <~~ json
+        self.userId = "_id" <~~ json
+        self.password = "password" <~~ json
     }
     
     func toJSON() -> JSON? {
         return jsonify([
             "username" ~~> username,
-            "_id" ~~> userId,
             "password" ~~> password
         ])
     }

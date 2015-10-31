@@ -33,9 +33,10 @@ public class TinyNetworking {
             guard let httpResponse = response as? NSHTTPURLResponse, responseData = data else { return failure(Reason.NoData, data) }
             
             if httpResponse.statusCode == 200 {
-                guard let result = resource.parse(responseData) else {return}
-                completion(result)
-                
+                dispatch_async(dispatch_get_main_queue()){
+                    guard let result = resource.parse(responseData) else {return}
+                    completion(result)
+                }
             }else{
                 failure(Reason.NoSuccessStatusCode(statusCode: httpResponse.statusCode), data)
             }

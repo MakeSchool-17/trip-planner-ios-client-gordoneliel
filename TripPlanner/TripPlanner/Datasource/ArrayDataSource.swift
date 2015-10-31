@@ -17,7 +17,6 @@ class ArrayDataSource: NSObject {
     var cellConfigureCallback: CellConfigureCallback?
 
     init(items: [AnyObject], cellIdentifier: String, cellConfigureCallback: CellConfigureCallback){
-        
         self.items = items
         self.cellIdentifier = cellIdentifier
         self.cellConfigureCallback = cellConfigureCallback
@@ -51,6 +50,27 @@ extension ArrayDataSource: UICollectionViewDataSource {
         cellConfigureCallback?(cell: cell, item: item)
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+            //1
+            switch kind {
+                //2
+            case UICollectionElementKindSectionHeader:
+                //3
+                let headerView =
+                collectionView.dequeueReusableSupplementaryViewOfKind(kind,
+                    withReuseIdentifier: "PlannedTripsHeaderView",
+                    forIndexPath: indexPath)
+                    as! PlannedTripHeaderView
+                
+                return headerView
+            default:
+                //4
+                assert(false, "Unexpected element kind")
+            }
     }
 }
 

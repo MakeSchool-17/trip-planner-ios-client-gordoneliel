@@ -10,7 +10,7 @@ import Foundation
 import Gloss
 import KeychainAccess
 
-typealias TripCallback = [Trip]? -> Void
+typealias TripCallback = ([TripModel]?) -> Void
 
 class APIClient: NSObject {
     // Singleton
@@ -30,23 +30,14 @@ class APIClient: NSObject {
      
      - returns: A Trip entity
      */
-    func parseTrip(data: NSData) -> [Trip]? {
+    func parseTrip(data: NSData) -> [TripModel]? {
         
         let tripData = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.init(rawValue: 0)) as! [JSON]
         
-        var tripModel = [TripModel]()
-        var tripEntities = [Trip]()
+        var tripModels: [TripModel] = []
+        tripModels = TripModel.modelsFromJSONArray(tripData)!
         
-
-        for json in tripData {
-            tripModel.append(TripModel(json: json)!)
-        }
-        
-        for trip in tripModel {
-            tripEntities.append(CoreDataParser.parseTripToCoreData(trip))
-        }
-        
-        return tripEntities
+        return tripModels
     }
     
     func parseTripForPost(data: NSData) -> String? {
@@ -72,7 +63,7 @@ class APIClient: NSObject {
         let keychain = Keychain(service: "com.saltar.TripPlanner")
         let password = try! keychain.getString("password")
         
-        let auth = BasicAuth.generateBasicAuthHeader(user.username, password: password!)
+        let auth = BasicAuth.generateBasicAuthHeader(user.username!, password: password!)
         
         let jsonData = try! NSJSONSerialization.dataWithJSONObject(trip.toJSON()!, options: NSJSONWritingOptions.init(rawValue: 0))
         
@@ -88,12 +79,12 @@ class APIClient: NSObject {
      
      - returns: A Trip
      */
-    func tripGet(username: String, password: String, method: HTTPMethod) -> Resource<[Trip]> {
+    func tripGet(username: String, password: String, method: HTTPMethod) -> Resource<[TripModel]> {
         
-        let keychain = Keychain(service: "com.saltar.TripPlanner")
-        let password = try! keychain.getString("password")
+//        let keychain = Keychain(service: "com.saltar.TripPlanner")
+//        let password = try! keychain.getString("password")
         
-        let auth = BasicAuth.generateBasicAuthHeader(username, password: password!)
+        let auth = BasicAuth.generateBasicAuthHeader(username, password: password)
         
         return Resource(path: "", method: method, requestBody: nil, headers: ["Authorization": auth], parse:parseTrip)
     }

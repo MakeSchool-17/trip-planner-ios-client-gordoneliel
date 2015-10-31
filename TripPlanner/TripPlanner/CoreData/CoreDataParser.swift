@@ -12,6 +12,7 @@ import CoreData
 /// Parses Networking Model Objects into Core Data Entities
 final class CoreDataParser {
     
+
     /**
      Converts a TripModel to a Core Data Trip Entity
      
@@ -26,7 +27,7 @@ final class CoreDataParser {
         
         let coreDataTripEntity = Trip(context: context)
         coreDataTripEntity.tripName = jsonModel.tripName
-        coreDataTripEntity.tripId = jsonModel.id
+        coreDataTripEntity.tripId = jsonModel.tripId
         coreDataTripEntity.user = jsonModel.tripUser
         
         stack.saveContext()

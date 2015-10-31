@@ -10,7 +10,7 @@ import Foundation
 import Gloss
 import KeychainAccess
 
-typealias LoginCallback = User? -> Void
+typealias LoginCallback = UserModel? -> Void
 
 struct BasicAuth {
     static func generateBasicAuthHeader(username: String, password: String) -> String {
@@ -32,35 +32,25 @@ class AuthenticationAPIClient: NSObject {
         static let loginUrlString = "http://192.168.1.206:5000/users/"
         static let logoutUrlString = "https://127.0.0.1/Logout"
         static let signUpUrlString = "http://127.0.0.1/users/"
-        static let UsernameRESTKey = "username"
-        static let PasswordRESTKey = "password"
-        
         
         case Login, Signup, Signout
     }
     
-    func parseUser(data: NSData) -> User? {
+    func parseUser(data: NSData) -> UserModel? {
         let jsonData = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.init(rawValue: 0)) as! JSON
         
         let user = UserModel(json: jsonData)!
         
-        // Store password in keychain before saving model to core  data
-        // TODO: Not sure if this is the right place to do this
-        let keychain = Keychain(service: "com.saltar.TripPlanner")
-        try! keychain.set(user.password, key: "password")
-        
-        let coreDataUser = CoreDataParser.parseUserToCoreData(user)
-        
-        return coreDataUser
+        return user
     }
     
-    func authenticatedUser(username: String, password: String, method: HTTPMethod) -> Resource<User> {
+    func authenticatedUser(username: String, password: String, method: HTTPMethod) -> Resource<UserModel> {
         let basicAuth = BasicAuth.generateBasicAuthHeader(username, password: password)
         return Resource(path: "", method: method, requestBody: nil,
             headers: ["Authorization": basicAuth], parse: parseUser)
     }
     
-    func signUpUser(username: String, password: String, method: HTTPMethod) -> Resource<User> {
+    func signUpUser(username: String, password: String, method: HTTPMethod) -> Resource<UserModel> {
         
         let user = UserModel(username: username, password: password).toJSON()!
         
@@ -70,8 +60,7 @@ class AuthenticationAPIClient: NSObject {
     }
     
     func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {
-        let string = String(data: data!, encoding: NSUTF8StringEncoding)
-        print("Failure: \(failureReason) \(string)")
+        print("Failure: \(failureReason)")
     }
     
     // MARK: - Authentication of User from Server
@@ -95,6 +84,12 @@ class AuthenticationAPIClient: NSObject {
             
             TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string:AuthenticationRouter.loginUrlString)!, resource: resource, failure: failure) {
                 user in
+                
+                
+                // Store password in keychain before saving model to core  data
+                // TODO: Not sure if this is the right place to do this
+                let keychain = Keychain(service: "com.saltar.TripPlanner")
+                try! keychain.set(password, key: "password")
                 
                 loginCallback(user)
             }
@@ -127,7 +122,13 @@ class AuthenticationAPIClient: NSObject {
             TinyNetworking.sharedInstance.apiRequest({_ in }, baseURL: NSURL(string: AuthenticationRouter.loginUrlString)!, resource: self.signUpUser(username, password: password, method: .POST), failure: self.defaultFailureHandler) {
                 
                 user in
-                print(user)
+                
+                // Store password in keychain before saving model to core  data
+                // TODO: Not sure if this is the right place to do this
+                let keychain = Keychain(service: "com.saltar.TripPlanner")
+                try! keychain.set(password, key: "password")
+                
+                signUpCallback(user)
                 
             }
         }
