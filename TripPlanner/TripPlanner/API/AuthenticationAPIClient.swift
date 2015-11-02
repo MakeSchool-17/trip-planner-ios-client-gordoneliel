@@ -29,7 +29,7 @@ class AuthenticationAPIClient: NSObject {
     
     
     enum AuthenticationRouter {
-        static let loginUrlString = "http://192.168.1.206:5000/users/"
+        static let loginUrlString = "http://172.30.2.150:5000/users/"
         static let logoutUrlString = "https://127.0.0.1/Logout"
         static let signUpUrlString = "http://127.0.0.1/users/"
         
@@ -88,8 +88,8 @@ class AuthenticationAPIClient: NSObject {
                 
                 // Store password in keychain before saving model to core  data
                 // TODO: Not sure if this is the right place to do this
-                let keychain = Keychain(service: "com.saltar.TripPlanner")
-                try! keychain.set(password, key: "password")
+//                let keychain = Keychain(service: "com.saltar.TripPlanner")
+//                try! keychain.set(password, key: "password")
                 
                 loginCallback(user)
             }

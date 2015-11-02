@@ -18,7 +18,7 @@ class APIClient: NSObject {
     
     /// Path per resource
     enum Router {
-        static let tripEndpoint = "http://192.168.1.206:5000/trips/"
+        static let tripEndpoint = "http://172.30.2.150:5000/trips/"
         static let UsernameRESTKey = "username"
         static let PasswordRESTKey = "password"
     }

@@ -43,6 +43,7 @@ class PlannedTripsViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         getTrips()
+        setupCollectionView()
     }
     
     /**
@@ -56,10 +57,14 @@ class PlannedTripsViewController: UIViewController {
     }
     
     @IBAction func refreshTrips(sender: AnyObject) {
+        SVProgressHUD.show()
         CoreDataSync(managedObjectContext: managedObjectContext).sync { result in
             self.trips = result
+            self.setupCollectionView()
             self.collectionView.reloadData()
+            SVProgressHUD.dismiss()
         }
+        
     }
     // MARK: - Navigation
     
