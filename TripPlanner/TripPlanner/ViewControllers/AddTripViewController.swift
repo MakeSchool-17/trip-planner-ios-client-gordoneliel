@@ -43,7 +43,6 @@ class AddTripViewController: UIViewController {
         }catch let error as DataError {
             SVProgressHUD.showErrorWithStatus(error.description, maskType: .Black)
         }catch {
-            SVProgressHUD.showErrorWithStatus("Eee", maskType: .Black)
         }
     }
     /**
@@ -53,7 +52,7 @@ class AddTripViewController: UIViewController {
      */
     func addTrip() throws {
         
-        guard !tripNameField.text!.isEmpty, let tripName = tripNameField.text else {
+        guard let tripName = tripNameField.text where !tripNameField.text!.isEmpty else {
             throw DataError.EmptyText
         }
         saveTrip(tripName)
@@ -62,10 +61,9 @@ class AddTripViewController: UIViewController {
     }
     
     func saveTrip(tripName: String) {
-        let user = UserModel(username: "eliel", password: "gordon")
-        let trip = TripModel(tripName: tripName, tripUser: user.username!)
+        let trip = TripModel(tripName: tripName)
         
-        APIClient.sharedInstance.postTrip(trip, user: user)
+        APIClient.sharedInstance.postTrip(trip)
     }
     
 }

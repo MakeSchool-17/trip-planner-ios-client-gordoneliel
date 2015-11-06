@@ -17,7 +17,7 @@ public class TinyNetworking {
     
     func apiRequest<A>(modifyRequest: NSMutableURLRequest -> (), baseURL: NSURL, resource: Resource<A>, failure: (Reason, NSData?) -> (), completion: A -> ()) {
         let session = NSURLSession.sharedSession()
-        let url = baseURL
+        let url = baseURL.URLByAppendingPathComponent(resource.path)
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = resource.method.rawValue
         request.HTTPBody = resource.requestBody

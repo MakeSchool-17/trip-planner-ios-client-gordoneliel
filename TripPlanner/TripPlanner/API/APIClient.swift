@@ -11,6 +11,7 @@ import Gloss
 import KeychainAccess
 
 typealias TripCallback = ([TripModel]?) -> Void
+typealias GooglePlaceCallback = (Results?) -> Void
 
 class APIClient: NSObject {
     // Singleton
@@ -18,7 +19,7 @@ class APIClient: NSObject {
     
     /// Path per resource
     enum Router {
-        static let tripEndpoint = "http://172.30.2.150:5000/trips/"
+        static let tripEndpoint = "http://192.168.1.206:5000/trips/"
         static let UsernameRESTKey = "username"
         static let PasswordRESTKey = "password"
     }
@@ -30,7 +31,7 @@ class APIClient: NSObject {
      
      - returns: A Trip entity
      */
-    func parseTrip(data: NSData) -> [TripModel]? {
+    private func parseTrip(data: NSData) -> [TripModel]? {
         
         let tripData = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.init(rawValue: 0)) as! [JSON]
         
@@ -40,11 +41,11 @@ class APIClient: NSObject {
         return tripModels
     }
     
-    func parseTripForPost(data: NSData) -> String? {
+    private func parseTripForPost(data: NSData) -> String? {
         return  String(data: data, encoding: NSUTF8StringEncoding)!
     }
     
-    func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {
+    private func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {
         let string = String(data: data!, encoding: NSUTF8StringEncoding)
         print("Failure: \(failureReason) \(string)")
     }
@@ -58,12 +59,13 @@ class APIClient: NSObject {
      
      - returns: Sucess or Error
      */
-    func tripPost(trip: TripModel, user: UserModel, method: HTTPMethod) -> Resource<String> {
+    private func tripPost(trip: TripModel, method: HTTPMethod) -> Resource<String> {
         
         let keychain = Keychain(service: "com.saltar.TripPlanner")
         let password = try! keychain.getString("password")
+        let username = try! keychain.getString("username")
         
-        let auth = BasicAuth.generateBasicAuthHeader(user.username!, password: password!)
+        let auth = BasicAuth.generateBasicAuthHeader(username!, password: password!)
         
         let jsonData = try! NSJSONSerialization.dataWithJSONObject(trip.toJSON()!, options: NSJSONWritingOptions.init(rawValue: 0))
         
@@ -81,10 +83,11 @@ class APIClient: NSObject {
      */
     func tripGet(username: String, password: String, method: HTTPMethod) -> Resource<[TripModel]> {
         
-//        let keychain = Keychain(service: "com.saltar.TripPlanner")
-//        let password = try! keychain.getString("password")
+        let keychain = Keychain(service: "com.saltar.TripPlanner")
+        let password = try! keychain.getString("password")
+        let username = try! keychain.getString("username")
         
-        let auth = BasicAuth.generateBasicAuthHeader(username, password: password)
+        let auth = BasicAuth.generateBasicAuthHeader(username!, password: password!)
         
         return Resource(path: "", method: method, requestBody: nil, headers: ["Authorization": auth], parse:parseTrip)
     }
@@ -95,9 +98,9 @@ class APIClient: NSObject {
      - parameter trip:       The trip to be posted
      - parameter user:       The user the trip is associated with
      */
-    func postTrip(trip:TripModel, user: UserModel) {
+    func postTrip(trip:TripModel) {
         
-        let resource = tripPost(trip, user: user, method: .POST)
+        let resource = tripPost(trip, method: .POST)
         let url = NSURL(string: Router.tripEndpoint)!
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
@@ -107,6 +110,13 @@ class APIClient: NSObject {
         }
     }
     
+    /**
+     Fetches a user's trips
+     
+     - parameter username: The username of the user
+     - parameter password: The password of the user
+     - parameter callback: Completion handler for the result of the network request from fetching the trips
+     */
     func getTrips(username: String, password: String, callback: TripCallback) {
         
         let resource = tripGet(username, password: password, method: .GET)
@@ -117,6 +127,34 @@ class APIClient: NSObject {
                 trips in
                 
                 callback(trips)
+            }
+        }
+    }
+    
+    // Mark: Google Places Api
+    
+    private func parsePlaces(data: NSData) -> [Results]? {
+        
+        let jsonData = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.init(rawValue: 0)) as! JSON
+        let results = jsonData["results"] as! [JSON]
+        let waypointModel = Results.modelsFromJSONArray(results)
+        return waypointModel
+    }
+    
+    private func getGooglePlace(text: String, method: HTTPMethod) -> Resource<[Results]> {
+        
+        return Resource(path: "/maps/api/place/textsearch/json", method: method, requestBody: nil, headers: [:], parse: parsePlaces)
+    }
+    
+    func fetchLikelyPlace(text: String , callback: GooglePlaceCallback) {
+        
+        let resource =  getGooglePlace(text, method: .GET)
+        let urlString = "https://maps.googleapis.com/?query=\(text)&key=AIzaSyCduSwsqeJaFGK156DSfMOKrt5TLFPg-rU"
+        let url = NSURL(string: urlString)!
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            TinyNetworking.sharedInstance.apiRequest({_ in}, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
+                place in
             }
         }
     }

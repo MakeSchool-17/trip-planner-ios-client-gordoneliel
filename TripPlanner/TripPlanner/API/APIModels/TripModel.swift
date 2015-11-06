@@ -16,9 +16,9 @@ struct TripModel: Glossy {
     var tripId: String?
     var waypoints: [WaypointModel]?
     
-    init(tripName: String, tripUser: String) {
+    init(tripName: String) {
         self.tripName = tripName
-        self.tripUser = tripUser
+        self.tripUser = ""
         self.tripId = ""
         self.createdAt = ""
         self.waypoints = []

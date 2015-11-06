@@ -44,7 +44,6 @@ class CoreDataSync {
             } catch let error {
                 print(error)
             }
-            try! self.managedObjectContext.save()
             
             let trips = coreDataClient.allTrips()
             callback(trips)

@@ -8,7 +8,6 @@
 
 import Foundation
 import Gloss
-import KeychainAccess
 
 typealias LoginCallback = UserModel? -> Void
 
@@ -29,14 +28,14 @@ class AuthenticationAPIClient: NSObject {
     
     
     enum AuthenticationRouter {
-        static let loginUrlString = "http://172.30.2.150:5000/users/"
+        static let loginUrlString = "http://192.168.1.206:5000/users/"
         static let logoutUrlString = "https://127.0.0.1/Logout"
         static let signUpUrlString = "http://127.0.0.1/users/"
         
         case Login, Signup, Signout
     }
     
-    func parseUser(data: NSData) -> UserModel? {
+    private func parseUser(data: NSData) -> UserModel? {
         let jsonData = try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.init(rawValue: 0)) as! JSON
         
         let user = UserModel(json: jsonData)!
@@ -44,13 +43,13 @@ class AuthenticationAPIClient: NSObject {
         return user
     }
     
-    func authenticatedUser(username: String, password: String, method: HTTPMethod) -> Resource<UserModel> {
+    private func authenticatedUser(username: String, password: String, method: HTTPMethod) -> Resource<UserModel> {
         let basicAuth = BasicAuth.generateBasicAuthHeader(username, password: password)
         return Resource(path: "", method: method, requestBody: nil,
             headers: ["Authorization": basicAuth], parse: parseUser)
     }
     
-    func signUpUser(username: String, password: String, method: HTTPMethod) -> Resource<UserModel> {
+    private func signUpUser(username: String, password: String, method: HTTPMethod) -> Resource<UserModel> {
         
         let user = UserModel(username: username, password: password).toJSON()!
         
@@ -59,7 +58,7 @@ class AuthenticationAPIClient: NSObject {
         return Resource(path: "", method: method, requestBody: jsonData, headers: [:], parse:parseUser)
     }
     
-    func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {
+    private func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {
         print("Failure: \(failureReason)")
     }
     
@@ -68,6 +67,7 @@ class AuthenticationAPIClient: NSObject {
     :abstract: Makes an *asynchronous* request to login a user with specified credentials.
     
     :discussion: Returns an instance of the successfully logged.
+                 After successful login, stores the user's credentials in the keychain with Authentication Controller
     
     - parameter username: The username of the user.
     - parameter password: The password of the user.
@@ -76,7 +76,6 @@ class AuthenticationAPIClient: NSObject {
     If login failed for either wrong password or wrong username, returns `Failure`.
     */
     func loginWithUsernameInBackground(username username: String, password: String, loginCallback: LoginCallback) {
-        
         let resource = authenticatedUser(username, password: password, method: .GET)
         let failure = defaultFailureHandler
         
@@ -85,12 +84,7 @@ class AuthenticationAPIClient: NSObject {
             TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string:AuthenticationRouter.loginUrlString)!, resource: resource, failure: failure) {
                 user in
                 
-                
-                // Store password in keychain before saving model to core  data
-                // TODO: Not sure if this is the right place to do this
-//                let keychain = Keychain(service: "com.saltar.TripPlanner")
-//                try! keychain.set(password, key: "password")
-                
+                AuthenticationController.sharedInstance.saveUserDetails(username: username, password: password)
                 loginCallback(user)
             }
         }
@@ -120,14 +114,9 @@ class AuthenticationAPIClient: NSObject {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
             TinyNetworking.sharedInstance.apiRequest({_ in }, baseURL: NSURL(string: AuthenticationRouter.loginUrlString)!, resource: self.signUpUser(username, password: password, method: .POST), failure: self.defaultFailureHandler) {
-                
                 user in
                 
-                // Store password in keychain before saving model to core  data
-                // TODO: Not sure if this is the right place to do this
-                let keychain = Keychain(service: "com.saltar.TripPlanner")
-                try! keychain.set(password, key: "password")
-                
+                AuthenticationController.sharedInstance.saveUserDetails(username: username, password: password)
                 signUpCallback(user)
                 
             }

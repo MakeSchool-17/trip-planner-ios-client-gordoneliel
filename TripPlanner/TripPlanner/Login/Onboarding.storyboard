@@ -151,7 +151,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MRp-nP-Twd" customClass="DesignableButton" customModule="TripPlanner" customModuleProvider="target">
                                 <rect key="frame" x="225" y="545" width="150" height="40"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.89324336361967216" green="0.27612098492206011" blue="0.22647857910614563" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.76470588235294112" green="0.22352941176470587" blue="0.18823529411764706" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Xkm-xL-kM8"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" priority="999" constant="150" id="yf9-D7-Mjo"/>
@@ -182,7 +182,7 @@
                             </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.95686274766921997" green="0.364705890417099" blue="0.29803922772407532" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.22352941179999999" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="yu6-Rc-ife" firstAttribute="leading" secondItem="nT5-at-eE7" secondAttribute="leading" priority="999" constant="20" id="GHN-j8-yhn"/>
                             <constraint firstAttribute="centerY" secondItem="yu6-Rc-ife" secondAttribute="centerY" id="NZh-ym-sH8"/>
@@ -375,7 +375,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxs-X4-20F" customClass="DesignableButton" customModule="TripPlanner" customModuleProvider="target">
                                 <rect key="frame" x="225" y="545" width="150" height="40"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.89324336360000001" green="0.27612098489999998" blue="0.22647857909999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.22352941179999999" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" priority="999" constant="150" id="lsH-k2-R0X"/>
                                     <constraint firstAttribute="height" constant="40" id="txw-iG-gDS"/>
@@ -406,7 +406,7 @@
                             </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.95686274770000002" green="0.36470589040000001" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.22352941179999999" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="XJm-qZ-pMy" firstAttribute="trailing" secondItem="din-Cd-K8W" secondAttribute="trailing" id="56b-9S-ga1"/>
                             <constraint firstItem="din-Cd-K8W" firstAttribute="leading" secondItem="zYM-gx-n6o" secondAttribute="leading" priority="999" constant="20" id="Ae3-pL-eOg"/>

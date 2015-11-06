@@ -25,6 +25,7 @@
 		0531A7541BCF2DE800965A0A /* TripDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531A7531BCF2DE800965A0A /* TripDetailViewController.swift */; };
 		0531A7571BCF2ECC00965A0A /* TripDetailBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531A7551BCF2ECC00965A0A /* TripDetailBannerCell.swift */; };
 		0531A7581BCF2ECC00965A0A /* TripDetailBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0531A7561BCF2ECC00965A0A /* TripDetailBannerCell.xib */; };
+		054AD9831BEC248300CBE9B1 /* GooglePlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054AD9821BEC248300CBE9B1 /* GooglePlaceModel.swift */; };
 		054CB38E1BE170F600E97C08 /* TripPlanner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 054CB38C1BE170F600E97C08 /* TripPlanner.xcdatamodeld */; };
 		054CB3931BE1717A00E97C08 /* Trip+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054CB38F1BE1717A00E97C08 /* Trip+CoreDataProperties.swift */; };
 		054CB3941BE1717A00E97C08 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054CB3901BE1717A00E97C08 /* Trip.swift */; };
@@ -47,6 +48,8 @@
 		05B9238E1BE418D700112E5C /* WaypointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B9238D1BE418D700112E5C /* WaypointModel.swift */; };
 		05B923911BE4209200112E5C /* Waypoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B9238F1BE4209200112E5C /* Waypoint+CoreDataProperties.swift */; };
 		05B923921BE4209200112E5C /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B923901BE4209200112E5C /* Waypoint.swift */; };
+		05C5FC891BE983FA0037DD5F /* EmptyTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C5FC881BE983FA0037DD5F /* EmptyTripView.swift */; };
+		05C5FC8B1BE984130037DD5F /* PresentTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C5FC8A1BE984130037DD5F /* PresentTripView.swift */; };
 		05E442361BDEB8CA0030B574 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E442351BDEB8CA0030B574 /* CoreDataStack.swift */; };
 		05E442381BDEC8B80030B574 /* CoreDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E442371BDEC8B80030B574 /* CoreDataParser.swift */; };
 		05EF538B1BE2DB3100A7DA5A /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EF538A1BE2DB3100A7DA5A /* AuthenticationController.swift */; };
@@ -98,6 +101,7 @@
 		0531A7531BCF2DE800965A0A /* TripDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailViewController.swift; sourceTree = "<group>"; };
 		0531A7551BCF2ECC00965A0A /* TripDetailBannerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailBannerCell.swift; sourceTree = "<group>"; };
 		0531A7561BCF2ECC00965A0A /* TripDetailBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TripDetailBannerCell.xib; sourceTree = "<group>"; };
+		054AD9821BEC248300CBE9B1 /* GooglePlaceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlaceModel.swift; sourceTree = "<group>"; };
 		054CB38D1BE170F600E97C08 /* TripPlanner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TripPlanner.xcdatamodel; sourceTree = "<group>"; };
 		054CB38F1BE1717A00E97C08 /* Trip+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Trip+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		054CB3901BE1717A00E97C08 /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 		05B9238D1BE418D700112E5C /* WaypointModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaypointModel.swift; sourceTree = "<group>"; };
 		05B9238F1BE4209200112E5C /* Waypoint+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Waypoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		05B923901BE4209200112E5C /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
+		05C5FC881BE983FA0037DD5F /* EmptyTripView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTripView.swift; sourceTree = "<group>"; };
+		05C5FC8A1BE984130037DD5F /* PresentTripView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentTripView.swift; sourceTree = "<group>"; };
 		05E442351BDEB8CA0030B574 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		05E442371BDEC8B80030B574 /* CoreDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataParser.swift; sourceTree = "<group>"; };
 		05EF538A1BE2DB3100A7DA5A /* AuthenticationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
@@ -264,8 +270,8 @@
 			isa = PBXGroup;
 			children = (
 				0531A7481BCEE0ED00965A0A /* PlannedTripsViewController.swift */,
-				0531A7531BCF2DE800965A0A /* TripDetailViewController.swift */,
 				0510FC931BD0362900999D04 /* AddTripViewController.swift */,
+				0531A7531BCF2DE800965A0A /* TripDetailViewController.swift */,
 				05EFCB5B1BE34E0E00DBACDC /* AddWaypointViewController.swift */,
 			);
 			path = ViewControllers;
@@ -274,6 +280,8 @@
 		0531A7441BCEE0AA00965A0A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				05C5FC881BE983FA0037DD5F /* EmptyTripView.swift */,
+				05C5FC8A1BE984130037DD5F /* PresentTripView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -324,6 +332,7 @@
 				059A897D1BD9AC1D008A07DE /* TripModel.swift */,
 				059A897F1BD9ACF0008A07DE /* UserModel.swift */,
 				05B9238D1BE418D700112E5C /* WaypointModel.swift */,
+				054AD9821BEC248300CBE9B1 /* GooglePlaceModel.swift */,
 			);
 			path = APIModels;
 			sourceTree = "<group>";
@@ -596,9 +605,12 @@
 				05EF538B1BE2DB3100A7DA5A /* AuthenticationController.swift in Sources */,
 				05B653091BCF55EE0054AF06 /* LoginViewController.swift in Sources */,
 				0531A7571BCF2ECC00965A0A /* TripDetailBannerCell.swift in Sources */,
+				05C5FC8B1BE984130037DD5F /* PresentTripView.swift in Sources */,
 				05B923911BE4209200112E5C /* Waypoint+CoreDataProperties.swift in Sources */,
+				054AD9831BEC248300CBE9B1 /* GooglePlaceModel.swift in Sources */,
 				0531A7501BCEE8B200965A0A /* ArrayDataSource.swift in Sources */,
 				054CB38E1BE170F600E97C08 /* TripPlanner.xcdatamodeld in Sources */,
+				05C5FC891BE983FA0037DD5F /* EmptyTripView.swift in Sources */,
 				05E442361BDEB8CA0030B574 /* CoreDataStack.swift in Sources */,
 				0531A70C1BCEE00B00965A0A /* AppDelegate.swift in Sources */,
 				054CB3981BE182EB00E97C08 /* CoreDataSync.swift in Sources */,

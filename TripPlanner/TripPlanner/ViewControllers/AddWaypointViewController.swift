@@ -9,63 +9,147 @@
 import UIKit
 import MapKit
 import GoogleMaps
+import SVProgressHUD
+
+protocol AddWaypointsDelegate: class {
+    func didAddWaypoints(controller: AddWaypointViewController)
+}
 
 class AddWaypointViewController: UIViewController {
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchToMapConstraint: NSLayoutConstraint!
 
-    
+    var dataSource: ArrayDataSource?
     var placesClient: GMSPlacesClient?
+    var places: [GMSPlace] = []
+    var autocompletePlace: [GMSAutocompletePrediction] = []
+    var waypoints: [(String?, Location?)] = []
+    
+    weak var delegate: AddWaypointsDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         placesClient = GMSPlacesClient()
+        setupTableView()
+    }
+    
+    func prepare() {
+        places = []
+        mapView.removeAnnotations(mapView.annotations)
     }
     
     func placeAutocomplete(place: String) {
+        SVProgressHUD.show()
+        prepare()
+        
         let filter = GMSAutocompleteFilter()
 
-        filter.type = GMSPlacesAutocompleteTypeFilter.Region
         placesClient?.autocompleteQuery(place, bounds: nil, filter: filter, callback: { (results, error: NSError?) -> Void in
             if let error = error {
                 print("Autocomplete error \(error)")
             }
             
-            for result in results! {
-                if let result = result as? GMSAutocompletePrediction {
-//                    print("Result \(result.attributedFullText) with placeID \(result.placeID)")
-                    
-                    self.placesClient?.lookUpPlaceID(result.placeID) {
-                        (place: GMSPlace? , error: NSError?) in
-                        print(place)
-                    }
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                if let results = results as? [GMSAutocompletePrediction] {
+                    self.autocompletePlace = results
                 }
+                
+                self.setupTableView()
+                self.tableView.reloadData()
+                SVProgressHUD.dismiss()
             }
+            
         })
     }
     
-    func addPinToMapView() {
-        let annotation = MKAnnotationView()
+    /**
+     Adds a pin to a MKMapView
+     
+     - parameter place: The Google Place
+     */
+    func addPinToMapView(place: GMSPlace) {
         
+        prepare()
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = place.coordinate
+        annotation.title = place.name
+        mapView.addAnnotation(annotation)
+        
+        let span = MKCoordinateSpanMake(1, 1)
+        let region = MKCoordinateRegion(center: place.coordinate, span: span)
+        
+        mapView.setRegion(region, animated: true)
+        
+    }
+    
+    /**
+     Fetches a place from a GMSAutocompletePrediction
+     
+     - parameter place: The autocomplete place which we later extract the placeID from
+     */
+    func fetchGooglePlace(place: GMSAutocompletePrediction) {
+        placesClient?.lookUpPlaceID(place.placeID) {
+            (place: GMSPlace?, error: NSError?) in
+            
+            guard let place = place else {return}
+            self.addPinToMapView(place)
+        }
+    }
+    
+    func setupTableView() {
+        dataSource = ArrayDataSource(items: autocompletePlace, cellIdentifier: "SearchResultsCell") {
+            (cell, item) in
+            
+            if let placeCell = cell as? UITableViewCell {
+                if let itemForCell = item as? GMSAutocompletePrediction {
+                    placeCell.textLabel?.text = itemForCell.attributedFullText.string
+                }
+            }
+        }
+        tableView.dataSource = dataSource
+    }
+    
+    
+    func saveTrip() {
+        
+    }
+    
+    // Adds a trip waypoint
+    @IBAction func addWaypointPressed(sender: UIBarButtonItem) {
+        
+        
+        delegate?.didAddWaypoints(self)
     }
 }
 
+// Mark: Search Bar Delegate
+
 extension AddWaypointViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+//        APIClient.sharedInstance.fetchLikelyPlace(searchBar.text!) {
+//            place in
+//            
+//        }
+        
         placeAutocomplete(searchBar.text!)
         
-//        UIView.animateWithDuration(0.4) {
-//            self.searchToMapConstraint.constant = 0
-//            self.view.setNeedsDisplay()
-//            self.view.layoutIfNeeded()
-//        }
+        searchBar.resignFirstResponder()
+        UIView.animateWithDuration(0.4) {
+            UIViewAnimationCurve.EaseInOut
+            self.searchToMapConstraint.constant = 0
+            self.view.setNeedsDisplay()
+            self.view.layoutIfNeeded()
+        }
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         
         UIView.animateWithDuration(0.4) {
+            UIViewAnimationCurve.EaseInOut
             self.searchToMapConstraint.constant = 300
             self.view.layoutIfNeeded()
             self.view.setNeedsDisplay()
@@ -74,12 +158,33 @@ extension AddWaypointViewController: UISearchBarDelegate {
     
 }
 
+// Mark: MKMapView Delegate
+
 extension AddWaypointViewController: MKMapViewDelegate {
-    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
-        var region: MKCoordinateRegion
-        region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 37, longitude: 102), 40, 30)
+//    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+//        var region: MKCoordinateRegion
+//        region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: 37, longitude: 102), 40, 30)
+//        
+//        mapView.setRegion(region, animated: true)
+//    }
+    // From https://gist.github.com/andrewgleave/915374 by Souf-R
+    func fitMapViewToAnnotaionList(annotations: [MKPointAnnotation]) -> Void {
+        let mapEdgePadding = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        var zoomRect:MKMapRect = MKMapRectNull
         
-        mapView.setRegion(region, animated: true)
+        for index in 0..<annotations.count {
+            let annotation = annotations[index]
+            let aPoint:MKMapPoint = MKMapPointForCoordinate(annotation.coordinate)
+            let rect:MKMapRect = MKMapRectMake(aPoint.x, aPoint.y, 0.1, 0.1)
+            
+            if MKMapRectIsNull(zoomRect) {
+                zoomRect = rect
+            } else {
+                zoomRect = MKMapRectUnion(zoomRect, rect)
+            }
+        }
+        
+        mapView.setVisibleMapRect(zoomRect, edgePadding: mapEdgePadding, animated: true)
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -91,5 +196,14 @@ extension AddWaypointViewController: MKMapViewDelegate {
         pinView.canShowCallout = true
         
         return pinView
+    }
+}
+
+// Mark: UITableview Delagate
+
+extension AddWaypointViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let item = autocompletePlace[indexPath.row]
+        fetchGooglePlace(item)
     }
 }

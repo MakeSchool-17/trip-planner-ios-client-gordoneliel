@@ -9,8 +9,9 @@
 import UIKit
 
 class TripDetailViewController: UIViewController {
-
-    @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet var presentTripView: PresentTripView!
+    @IBOutlet var emptyTripView: EmptyTripView!
     
     var trip: Trip?
     var tripDetailArrayDataSource: ArrayDataSource?
@@ -18,43 +19,36 @@ class TripDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.delegate = self
-        setupTableView()
+        viewToPresent()
     }
-}
-
-extension TripDetailViewController {
-    func setupTableView() {
+    
+    /**
+     Presents a view based on whether a user has trips or not
+     */
+    func viewToPresent() {
         
-        tripDetailArrayDataSource = ArrayDataSource(items: [trip!], cellIdentifier: PlannedTripsCellIdentifier,
-            cellConfigureCallback: {
-                (cell, item) -> () in
-                
-                if let actualCell = cell as? PlannedTripsCVCell {
-                    if let actualItem = item as? Trip {
-                        actualCell.configureCell(actualItem)
-                    }
-                }
-        })
-        collectionView.dataSource = tripDetailArrayDataSource
-        collectionView.registerNib(PlannedTripsCVCell.nib(), forCellWithReuseIdentifier: PlannedTripsCellIdentifier)
-        collectionView.registerNib(PlannedTripHeaderView.nib(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "PlannedTripsHeaderView")
-    }
-}
-
-extension TripDetailViewController: UICollectionViewDelegate {
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = self.collectionView.frame.size.width - 20
+        guard let trip = trip else {return}
+        guard let waypoints = trip.waypoints else {return}
+        let frame = self.view.frame
         
-        return CGSize(width: width, height: 200)
+        if waypoints.count == 0 {
+            emptyTripView.frame = frame
+            emptyTripView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            self.view.addSubview(emptyTripView)
+            return
+        } else  {
+            presentTripView.frame = frame
+            presentTripView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            self.view.addSubview(presentTripView)
+        }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    }
+    @IBAction func cancelToTripDetail(segue:UIStoryboardSegue) {}
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return CGFloat(20)
+    
+    // Mark: Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
     }
 }

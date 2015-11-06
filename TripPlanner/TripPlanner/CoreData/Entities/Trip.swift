@@ -25,6 +25,5 @@ class Trip: NSManagedObject {
         tripName = jsonTrip.tripName
         tripId = jsonTrip.tripId
         user = jsonTrip.tripUser
-        
     }
 }
