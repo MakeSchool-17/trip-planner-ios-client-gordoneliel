@@ -40,6 +40,9 @@ class TripDetailViewController: UIViewController {
             presentTripView.frame = frame
             presentTripView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
             self.view.addSubview(presentTripView)
+            
+            presentTripView.trip = trip
+            presentTripView.setupTableView()
         }
     }
     
@@ -50,5 +53,20 @@ class TripDetailViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        if segue.identifier == "addWaypoints" {
+            if let navController = segue.destinationViewController as? UINavigationController {
+                if let waypointsView = navController.viewControllers.first as? AddWaypointViewController {
+                     waypointsView.trip = trip
+                     waypointsView.delegate = self
+                }
+            }
+        }
+    }
+}
+
+extension TripDetailViewController: AddWaypointsDelegate {
+    
+    func didAddWaypoints(controller: AddWaypointViewController) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
     }
 }

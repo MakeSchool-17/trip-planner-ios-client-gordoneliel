@@ -17,5 +17,7 @@ extension Trip {
     @NSManaged var tripId: String?
     @NSManaged var tripName: String?
     @NSManaged var user: String?
+    @NSManaged var updatedAt: NSNumber?
+    @NSManaged var createdAt: NSNumber?
     @NSManaged var waypoints: NSSet?
 }

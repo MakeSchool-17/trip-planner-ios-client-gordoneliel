@@ -51,7 +51,6 @@
 		05C5FC891BE983FA0037DD5F /* EmptyTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C5FC881BE983FA0037DD5F /* EmptyTripView.swift */; };
 		05C5FC8B1BE984130037DD5F /* PresentTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C5FC8A1BE984130037DD5F /* PresentTripView.swift */; };
 		05E442361BDEB8CA0030B574 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E442351BDEB8CA0030B574 /* CoreDataStack.swift */; };
-		05E442381BDEC8B80030B574 /* CoreDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E442371BDEC8B80030B574 /* CoreDataParser.swift */; };
 		05EF538B1BE2DB3100A7DA5A /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EF538A1BE2DB3100A7DA5A /* AuthenticationController.swift */; };
 		05EFCB591BE340C900DBACDC /* PlannedTripHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EFCB571BE340C900DBACDC /* PlannedTripHeaderView.swift */; };
 		05EFCB5A1BE340C900DBACDC /* PlannedTripHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05EFCB581BE340C900DBACDC /* PlannedTripHeaderView.xib */; };
@@ -127,7 +126,6 @@
 		05C5FC881BE983FA0037DD5F /* EmptyTripView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTripView.swift; sourceTree = "<group>"; };
 		05C5FC8A1BE984130037DD5F /* PresentTripView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentTripView.swift; sourceTree = "<group>"; };
 		05E442351BDEB8CA0030B574 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		05E442371BDEC8B80030B574 /* CoreDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataParser.swift; sourceTree = "<group>"; };
 		05EF538A1BE2DB3100A7DA5A /* AuthenticationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
 		05EFCB571BE340C900DBACDC /* PlannedTripHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlannedTripHeaderView.swift; sourceTree = "<group>"; };
 		05EFCB581BE340C900DBACDC /* PlannedTripHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlannedTripHeaderView.xib; sourceTree = "<group>"; };
@@ -345,9 +343,8 @@
 				054CB3881BE170A000E97C08 /* Entities */,
 				052A860D1BD73B6200625EAC /* PersistenceController.swift */,
 				05B001681BE44F8400BD8B05 /* CoreDataClient.swift */,
-				05E442351BDEB8CA0030B574 /* CoreDataStack.swift */,
-				05E442371BDEC8B80030B574 /* CoreDataParser.swift */,
 				054CB3971BE182EB00E97C08 /* CoreDataSync.swift */,
+				05E442351BDEB8CA0030B574 /* CoreDataStack.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -631,7 +628,6 @@
 				05B001691BE44F8500BD8B05 /* CoreDataClient.swift in Sources */,
 				05B9238E1BE418D700112E5C /* WaypointModel.swift in Sources */,
 				05B653031BCF4C090054AF06 /* AuthenticationAPIClient.swift in Sources */,
-				05E442381BDEC8B80030B574 /* CoreDataParser.swift in Sources */,
 				059A897E1BD9AC1D008A07DE /* TripModel.swift in Sources */,
 				058337C21BD2CDCC00C25EDF /* Resource.swift in Sources */,
 				052A860E1BD73B6200625EAC /* PersistenceController.swift in Sources */,

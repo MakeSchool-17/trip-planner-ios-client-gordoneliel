@@ -22,14 +22,31 @@ class CoreDataSync {
     func sync(callback: SynchronizerCallback) {
         let coreDataClient = CoreDataClient(managedObjectContext: self.managedObjectContext)
         
-        APIClient.sharedInstance.getTrips("eliel", password: "gordon") {
+        APIClient.sharedInstance.getTrips {
             trips in
             
             let coreDataTripIds = coreDataClient.allTrips().map { $0.tripId!}
+            let coreDataTrips = coreDataClient.allTrips()
+            
+//            var newServerTrips: [TripModel]?
+            
+//            for serverTrip in trips!{
+//                if coreDataTrips.count != 0{
+//                    for coreDataTrip in coreDataTrips {
+//                        if coreDataTrip.updatedAt?.doubleValue <= serverTrip.updatedAt{
+//                            newServerTrips?.append(serverTrip)
+//                        }
+//                    }
+//                } else {
+//                    newServerTrips = trips
+//                }
+//            }
+            
             let newServerTrips = trips?.filter {
                 !coreDataTripIds.contains($0.tripId!)
+//                coreDataTrips.contains($0.tripId!)
             }
-
+            
             newServerTrips?.forEach {
                 let trip = Trip(context: self.managedObjectContext, jsonTrip: $0)
                 

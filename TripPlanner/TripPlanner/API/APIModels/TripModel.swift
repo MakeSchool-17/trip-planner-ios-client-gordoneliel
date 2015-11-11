@@ -12,7 +12,8 @@ import Gloss
 struct TripModel: Glossy {
     var tripName: String?
     var tripUser: String?
-    var createdAt: String?
+    var createdAt: Double?
+    var updatedAt: Double?
     var tripId: String?
     var waypoints: [WaypointModel]?
     
@@ -20,7 +21,8 @@ struct TripModel: Glossy {
         self.tripName = tripName
         self.tripUser = ""
         self.tripId = ""
-        self.createdAt = ""
+        self.createdAt = 0
+        self.updatedAt = 0
         self.waypoints = []
     }
     
@@ -28,10 +30,8 @@ struct TripModel: Glossy {
         self.tripId = "_id" <~~ json
         self.tripUser = "username" <~~ json
         self.tripName = "tripName" <~~ json
-        
-        let date: String = ("createdAt" <~~ json)!
-        
-        self.createdAt = date
+        self.updatedAt = "updatedAt" <~~ json
+        self.createdAt = "createdAt" <~~ json
         self.waypoints = "waypoints" <~~ json
     }
     
@@ -39,7 +39,8 @@ struct TripModel: Glossy {
         return jsonify([
             "tripName" ~~> tripName,
             "username" ~~> tripUser,
-            "waypoints" ~~> waypoints
+            "waypoints" ~~> waypoints,
+            "createdAt" ~~> createdAt,
         ])
     }
 }

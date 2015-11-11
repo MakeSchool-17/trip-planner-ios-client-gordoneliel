@@ -22,6 +22,7 @@ public class TinyNetworking {
         request.HTTPMethod = resource.method.rawValue
         request.HTTPBody = resource.requestBody
         modifyRequest(request)
+
         for (key,value) in resource.headers {
             request.setValue(value, forHTTPHeaderField: key)
         }
@@ -34,7 +35,7 @@ public class TinyNetworking {
             
             if httpResponse.statusCode == 200 {
                 dispatch_async(dispatch_get_main_queue()){
-                    guard let result = resource.parse(responseData) else {return}
+                    guard let result = resource.parse(responseData) else { return failure(Reason.CouldNotParseJSON, responseData)}
                     completion(result)
                 }
             }else{

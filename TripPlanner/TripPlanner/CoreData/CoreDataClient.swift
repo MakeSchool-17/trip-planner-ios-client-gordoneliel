@@ -19,7 +19,7 @@ class CoreDataClient {
   
   func allTrips() -> [Trip] {
     let fetchRequest = NSFetchRequest(entityName: "Trip")
-    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "tripId", ascending: false)]
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "updatedAt", ascending: false)]
     let trips = try! managedObjectContext.executeFetchRequest(fetchRequest) as! [Trip]
     
     return trips

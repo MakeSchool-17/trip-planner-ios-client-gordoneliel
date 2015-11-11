@@ -22,9 +22,11 @@ class AddWaypointViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchToMapConstraint: NSLayoutConstraint!
 
+    var trip: Trip?
     var dataSource: ArrayDataSource?
     var placesClient: GMSPlacesClient?
     var places: [GMSPlace] = []
+    var selectedPlace: WaypointModel?
     var autocompletePlace: [GMSAutocompletePrediction] = []
     var waypoints: [(String?, Location?)] = []
     
@@ -96,6 +98,9 @@ class AddWaypointViewController: UIViewController {
             (place: GMSPlace?, error: NSError?) in
             
             guard let place = place else {return}
+            let coordinate = place.coordinate
+            let placeName = place.name
+            self.selectedPlace = WaypointModel(latitude: coordinate.latitude, longitude: coordinate.longitude, name: placeName)
             self.addPinToMapView(place)
         }
     }
@@ -115,13 +120,19 @@ class AddWaypointViewController: UIViewController {
     
     
     func saveTrip() {
+        var updatedTrip = TripModel(tripName: "")
+        updatedTrip.tripId = trip?.tripId
+        updatedTrip.tripName = trip?.tripName
+        updatedTrip.tripUser = trip?.user
+        updatedTrip.waypoints = [selectedPlace!] ?? []
         
+        APIClient.sharedInstance.putTrip(updatedTrip)
     }
     
     // Adds a trip waypoint
     @IBAction func addWaypointPressed(sender: UIBarButtonItem) {
         
-        
+        saveTrip()
         delegate?.didAddWaypoints(self)
     }
 }

@@ -19,7 +19,7 @@ class APIClient: NSObject {
     
     /// Path per resource
     enum Router {
-        static let tripEndpoint = "http://192.168.1.206:5000/trips/"
+        static let tripEndpoint = "http://172.30.2.150:5000/trips/"
         static let UsernameRESTKey = "username"
         static let PasswordRESTKey = "password"
     }
@@ -46,7 +46,8 @@ class APIClient: NSObject {
     }
     
     private func defaultFailureHandler(failureReason: TinyNetworking.Reason, data: NSData?) {
-        let string = String(data: data!, encoding: NSUTF8StringEncoding)
+        guard let data = data else {return}
+        let string = String(data: data, encoding: NSUTF8StringEncoding)
         print("Failure: \(failureReason) \(string)")
     }
     
@@ -61,11 +62,9 @@ class APIClient: NSObject {
      */
     private func tripPost(trip: TripModel, method: HTTPMethod) -> Resource<String> {
         
-        let keychain = Keychain(service: "com.saltar.TripPlanner")
-        let password = try! keychain.getString("password")
-        let username = try! keychain.getString("username")
+        let (username, password) = AuthenticationController.sharedInstance.fetchUserDetails()!
         
-        let auth = BasicAuth.generateBasicAuthHeader(username!, password: password!)
+        let auth = BasicAuth.generateBasicAuthHeader(username, password: password)
         
         let jsonData = try! NSJSONSerialization.dataWithJSONObject(trip.toJSON()!, options: NSJSONWritingOptions.init(rawValue: 0))
         
@@ -83,15 +82,21 @@ class APIClient: NSObject {
      */
     func tripGet(username: String, password: String, method: HTTPMethod) -> Resource<[TripModel]> {
         
-        let keychain = Keychain(service: "com.saltar.TripPlanner")
-        let password = try! keychain.getString("password")
-        let username = try! keychain.getString("username")
-        
-        let auth = BasicAuth.generateBasicAuthHeader(username!, password: password!)
+        let auth = BasicAuth.generateBasicAuthHeader(username, password: password)
         
         return Resource(path: "", method: method, requestBody: nil, headers: ["Authorization": auth], parse:parseTrip)
     }
     
+    func tripPut(trip: TripModel, method: HTTPMethod) -> Resource<String> {
+        
+        let (username, password) = AuthenticationController.sharedInstance.fetchUserDetails()!
+        
+        let auth = BasicAuth.generateBasicAuthHeader(username, password: password)
+        
+        let jsonData = try! NSJSONSerialization.dataWithJSONObject(trip.toJSON()!, options: NSJSONWritingOptions.init(rawValue: 0))
+        
+        return Resource(path: "\(trip.tripId!)", method: method, requestBody: jsonData, headers: ["Authorization": auth], parse: parseTripForPost)
+    }
     /**
      Posts a trip to the server
      
@@ -117,7 +122,9 @@ class APIClient: NSObject {
      - parameter password: The password of the user
      - parameter callback: Completion handler for the result of the network request from fetching the trips
      */
-    func getTrips(username: String, password: String, callback: TripCallback) {
+    func getTrips(callback: TripCallback) {
+        
+        let (username, password) = AuthenticationController.sharedInstance.fetchUserDetails()!
         
         let resource = tripGet(username, password: password, method: .GET)
         let url = NSURL(string: Router.tripEndpoint)!
@@ -127,6 +134,24 @@ class APIClient: NSObject {
                 trips in
                 
                 callback(trips)
+            }
+        }
+    }
+    
+    /**
+     Updates a trip on the server
+     
+     - parameter trip:       The trip to be posted
+     - parameter user:       The user the trip is associated with
+     */
+    func putTrip(trip:TripModel) {
+        
+        let resource = tripPut(trip, method: .PUT)
+        let url = NSURL(string: Router.tripEndpoint)!
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
+                message in
             }
         }
     }

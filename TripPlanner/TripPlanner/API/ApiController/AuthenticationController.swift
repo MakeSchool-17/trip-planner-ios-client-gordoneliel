@@ -13,7 +13,7 @@ class AuthenticationController {
     
     //Singleton
     static let sharedInstance = AuthenticationController()
-    let service = "com.saltar.TripPlanner"
+    private let service = "com.saltar.TripPlanner"
     
     /**
      Saves the details of a user in the keychain
@@ -35,13 +35,13 @@ class AuthenticationController {
      
      - returns: The credentials of a user
      */
-    func fetchUserDetails() -> String {
+    func fetchUserDetails() -> (String, String)? {
         let keychain = Keychain(service: service)
         do {
-            return try keychain.get("password")!
+            return try (keychain.get("username")!, keychain.get("password")!)
         } catch {
             
         }
-        return ""
+        return nil
     }
 }

@@ -14,6 +14,12 @@ struct WaypointModel: Glossy {
     let longitude: Double?
     let name: String?
     
+    init(latitude: Double, longitude: Double, name: String) {
+        self.latitude = latitude
+        self.longitude = longitude
+        self.name = name
+    }
+    
     init?(json: JSON) {
         self.latitude = "latitude" <~~ json
         self.longitude = "longitude" <~~ json
