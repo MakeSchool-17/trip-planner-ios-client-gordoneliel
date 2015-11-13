@@ -67,7 +67,7 @@ class AuthenticationAPIClient: NSObject {
     :abstract: Makes an *asynchronous* request to login a user with specified credentials.
     
     :discussion: Returns an instance of the successfully logged.
-                 After successful login, stores the user's credentials in the keychain with Authentication Controller
+    After successful login, stores the user's credentials in the keychain with Authentication Controller
     
     - parameter username: The username of the user.
     - parameter password: The password of the user.
@@ -79,14 +79,11 @@ class AuthenticationAPIClient: NSObject {
         let resource = authenticatedUser(username, password: password, method: .GET)
         let failure = defaultFailureHandler
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string:AuthenticationRouter.loginUrlString)!, resource: resource, failure: failure) {
+            user in
             
-            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: NSURL(string:AuthenticationRouter.loginUrlString)!, resource: resource, failure: failure) {
-                user in
-                
-                AuthenticationController.sharedInstance.saveUserDetails(username: username, password: password)
-                loginCallback(user)
-            }
+            AuthenticationController.sharedInstance.saveUserDetails(username: username, password: password)
+            loginCallback(user)
         }
     }
     
@@ -97,10 +94,6 @@ class AuthenticationAPIClient: NSObject {
      */
     func logoutInBackground() {
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
-            
-            
-        }
     }
     
     /**
@@ -112,14 +105,12 @@ class AuthenticationAPIClient: NSObject {
      */
     func signUpInBackground(username username: String, password: String, signUpCallback: LoginCallback) {
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
-            TinyNetworking.sharedInstance.apiRequest({_ in }, baseURL: NSURL(string: AuthenticationRouter.loginUrlString)!, resource: self.signUpUser(username, password: password, method: .POST), failure: self.defaultFailureHandler) {
-                user in
-                
-                AuthenticationController.sharedInstance.saveUserDetails(username: username, password: password)
-                signUpCallback(user)
-                
-            }
+        TinyNetworking.sharedInstance.apiRequest({_ in }, baseURL: NSURL(string: AuthenticationRouter.loginUrlString)!, resource: self.signUpUser(username, password: password, method: .POST), failure: self.defaultFailureHandler) {
+            user in
+            
+            AuthenticationController.sharedInstance.saveUserDetails(username: username, password: password)
+            signUpCallback(user)
+            
         }
     }
 }

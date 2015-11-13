@@ -108,11 +108,10 @@ class APIClient: NSObject {
         let resource = tripPost(trip, method: .POST)
         let url = NSURL(string: Router.tripEndpoint)!
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
-                message in
-            }
+        TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
+            message in
         }
+        
     }
     
     /**
@@ -129,12 +128,10 @@ class APIClient: NSObject {
         let resource = tripGet(username, password: password, method: .GET)
         let url = NSURL(string: Router.tripEndpoint)!
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
-                trips in
-                
-                callback(trips)
-            }
+        TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
+            trips in
+            
+            callback(trips)
         }
     }
     
@@ -149,10 +146,8 @@ class APIClient: NSObject {
         let resource = tripPut(trip, method: .PUT)
         let url = NSURL(string: Router.tripEndpoint)!
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
-                message in
-            }
+        TinyNetworking.sharedInstance.apiRequest({ _ in }, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
+            message in
         }
     }
     
@@ -177,10 +172,8 @@ class APIClient: NSObject {
         let urlString = "https://maps.googleapis.com/?query=\(text)&key=AIzaSyCduSwsqeJaFGK156DSfMOKrt5TLFPg-rU"
         let url = NSURL(string: urlString)!
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            TinyNetworking.sharedInstance.apiRequest({_ in}, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
-                place in
-            }
+        TinyNetworking.sharedInstance.apiRequest({_ in}, baseURL: url, resource: resource, failure: self.defaultFailureHandler) {
+            place in
         }
     }
 }
